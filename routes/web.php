@@ -14,5 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login.login');
+});
+
+Route::get('login', function() {
+    return view('login.login');
+    //buscara el archivo 'login' donde también se relizará la autenticación dentro de resoureces/views
 });
