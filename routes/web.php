@@ -21,3 +21,8 @@ Route::get('login', function() {
     return view('login.login');
     //buscara el archivo 'login' donde también se relizará la autenticación dentro de resoureces/views
 });
+
+Route::get('tablero', function() {
+    return view('supervisor.tablero');
+    //buscara el archivo 'tablero' dentro de resoureces/views
+});

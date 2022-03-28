@@ -8,9 +8,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous"> 
 </head>
-<!--Coded with love by Mutiullah Samim-->
+
 <body>
 	<div class="container h-100">
+    
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
 				<div class="d-flex justify-content-center">
@@ -24,6 +25,13 @@
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
+              @if (session('error'))
+              <div>
+                  {{ session('error') }}
+              </div>
+              <br>
+              @endif
+            @csrf
 							<input type="text" name="" class="form-control input_user" value="" placeholder="correo">
 						</div>
 						<div class="input-group mb-2">
