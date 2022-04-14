@@ -27,9 +27,5 @@ Route::get('tablero', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
-Route::get('/', function() {
-    return view('barra');
-    //buscara el archivo 'autenticar.php' o 'autenticar.blade.php' dentro de resoureces/views
-});
+Route::post('/validar',[AutenticarController::class, 'validar']);
 
-// Route::post('validarLogin')
