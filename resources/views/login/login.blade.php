@@ -19,7 +19,7 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form>
+			<form action="validar" method="post">
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -30,15 +30,14 @@
               </div>
               <br>
               @endif
-			<form action="validar" method="post">
 				@csrf
-				<input type="text" name="" class="form-control input_user" value="" placeholder="correo">
+				<input type="text" name="usuario" class="form-control input_user" value="" placeholder="correo">
 				</div>
 					<div class="input-group mb-2">
 						<div class="input-group-append">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" name="" class="form-control input_pass" value="" placeholder="contraseña">
+						<input type="password" name="contraseña" class="form-control input_pass" value="" placeholder="contraseña">
 					</div>
 						<div class="form-group">
 							<div class="custom-control custom-checkbox">

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("apellido_materno",30)->nullable();
             $table->string("correo",50);
             $table->string("imagen",30)->nullable();
-            $table->enum('rol', ['Cliente','Encargado','Contador','Vendedor'])->default('Cliente');
+            $table->enum('rol', ['Cliente','Encargado','Contador','Supervisor'])->default('Cliente');
             $table->tinyInteger("activo");
             $table->string("password",100);
         });
