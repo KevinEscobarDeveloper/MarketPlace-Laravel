@@ -3,49 +3,36 @@
 
 @section('content')
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Cliente</title>
-    <link href="{{ asset('css/productos.css')}}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <scritp src="popper/popper.min.js"></script>
-    <script src="plugin/sweetalert2/sweetalert2.all.min.js"></script>
-
- 
-</head>
-<form  class="form"  action="total.php" method="post">
-    <h1>Productos</h1>
-    <table>
-        <tr>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-        </tr>
-        <tr>
-            <td>Arroz</td>
-            <td>10</td>
-            <td><input type="number" id="p1" name="p1" placeholder="0" min="0" value=0></td>
-        </tr>
-        <tr>
-            <td>leche</td>
-            <td>21</td>
-            <td><input type="number" id="p2" name="p2" placeholder="0" min="0" value=0></td>
-        </tr>
-        <tr>
-            <td>Atún</td>
-            <td>10</td>
-            <td><input type="number" id="p3" name="p3" placeholder="0" min="0" value=0></td>
-        </tr>
-
-    </table>
-    <input type="submit" name="submit"  value="Calcular">
-</form>
+<html>
     
+<head>
+    <link href="{{ asset('css/contenido.css')}}" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous"> 
+</head>
 
+<body>
+    <main style="margin-top: 58px;">
+        <div class="container pt-4">
+            @foreach ($categorias as $categoria)
+    <div class="recuadro" id="uno">
+        <div class="card" style="width: 14rem;">
+            <img class="card-img-top" width ="50px" src={{$categoria->imagen}}>
+            <div class="card-body">
+            <h5 class="card-title">{{ $categoria->nombre }}</h5>
+            <p class="card-text">{{ $categoria->descripción }}</p>
+            <a href="/{{ $categoria->nombre }}" class="btn btn-primary">Ir a la categoria</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+        </div>
+      </main>
+    
 </body>
 
+</body>
 </html>
 @endsection
 

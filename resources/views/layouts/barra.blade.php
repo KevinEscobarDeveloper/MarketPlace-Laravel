@@ -11,101 +11,90 @@
       </head>
   <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- Navbar -->
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
   <!-- Container wrapper -->
-  <div class="container-fluid">
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
+  <!-- Navbar brand -->
+  <a class="navbar-brand mt-2 mt-lg-0" href="#">
+    <img
+      src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
+      height="15"
+      alt="MDB Logo"
+      loading="lazy"
+    />
+  </a>
+  <!-- Left links -->
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link" href="/registrar-cliente">Registrarse</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Team</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Projects</a>
+    </li>
+  </ul>
+  <!-- Left links -->
+</div>
+<!-- Collapsible wrapper -->
 
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-          height="15"
-          alt="MDB Logo"
-          loading="lazy"
-        />
-      </a>
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
+<!-- Right elements -->
+<div class="d-flex align-items-center">
+  <!-- Icon -->
+  <a class="text-reset me-3" href="#">
+    <i class="fas fa-shopping-cart"></i>
+  </a>
+
+  <div class="col-4 text-right barra">
+    <ul class="navbar-nav mr-auto">
+        <li>
+              <a href="#" class="px-3 text-light perfil dropdown-toggle" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                            class="fas fa-user-circle user"></i></a>
+
+           <div class="dropdown-menu" aria-labelledby="navbar-dropdown ">
+                <a class="dropdown-item menuperfil cerrar" href="/login"><i
+                    class="fas fa-sign-out-alt m-1"></i>Salir
+                </a>
+            </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Projects</a>
-        </li>
-      </ul>
-      <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
+    </ul>
+</div>
 
-    <!-- Right elements -->
-    <div class="d-flex align-items-center">
-      <!-- Icon -->
-      <a class="text-reset me-3" href="#">
-        <i class="fas fa-shopping-cart"></i>
-      </a>
-
-      <div class="col-4 text-right barra">
-        <ul class="navbar-nav mr-auto">
-            <li>
-                  <a href="#" class="px-3 text-light perfil dropdown-toggle" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                                class="fas fa-user-circle user"></i></a>
-
-               <div class="dropdown-menu" aria-labelledby="navbar-dropdown ">
-                    <a class="dropdown-item menuperfil cerrar" href="/login"><i
-                        class="fas fa-sign-out-alt m-1"></i>Salir
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <!-- Right elements -->
+    </ul>
   </div>
   <!-- Container wrapper -->
-  </div>
 </nav>
 
 <div class="recuadro">
-  <!-- Sidebar -->
-  <nav id="sidebar">
-      <div class="sidebar-header">
-        <h3>Menú</h3>
+    <!-- Sidebar -->
+  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <div class="position-sticky">
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a
+          href="/all-productos"
+          class="list-group-item list-group-item-action py-2 ripple"
+          aria-current="true"
+        >
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Productos</span>
+        </a>
+        <a href="/principal-categoria" class="list-group-item list-group-item-action py-2 ripple active">
+          <i class="fas fa-chart-area fa-fw me-3"></i><span>Categorías</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-lock fa-fw me-3"></i><span>Ventas</span></a
+        >
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis compras</span></a
+        >
       </div>
-
-      <ul class="list-unstyled components">
-          <li>
-              <a href="#">Productos</a>
-          </li>
-          <li>
-              <a href="#">Categorias</a>
-          </li>
-          <li>
-              <a href="#">Ventas</a>
-          </li>
-          <li>
-              <a href="#">Mis compras</a>
-          </li>
-      </ul>
-      </div> 
+    </div>
   </nav>
+  <!-- Sidebar -->
 </div>
+
+
   <div class="recuadro" id="dos">
           @yield('content')<!-- contenido -->
   </div>

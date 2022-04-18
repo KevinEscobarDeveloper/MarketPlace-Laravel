@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutenticarController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProductoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,5 +37,23 @@ Route::get('tablero', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
+Route::get('registrar-cliente', function() {
+    return view('clientes.registrar');
+    //buscara el archivo 'tablero' dentro de resoureces/views
+});
+
+
+
 Route::post('/validar',[AutenticarController::class, 'validar']);
 
+//Listar categorias
+Route::get('principal-categoria',[CategoriaController::class, 'listarcategorias']);
+//Listar productos por categorias 
+Route::get('Herramientas',[CategoriaController::class, 'listarherramientas']);
+Route::get('Ropa',[CategoriaController::class, 'listarropa']);
+Route::get('Alimentos',[CategoriaController::class, 'listaralimentos']);
+Route::get('Muebles',[CategoriaController::class, 'listarmuebles']);
+Route::get('productos',[CategoriaController::class, 'listarmuebles']);
+
+//Listar todos los productos
+Route::get('all-productos',[ProductoController::class, 'listarproductos']);
