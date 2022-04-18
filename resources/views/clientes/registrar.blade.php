@@ -20,7 +20,7 @@
                     <div class="col-md-12">
                         <div class="well well-sm">
                             	
-                            <form class="form-horizontal" method="post">
+                            <form action="/crearcliente" class="form-horizontal" method="post" enctype="multipart/form-data">
                                 <fieldset>
                                     <legend class="text-center header">Registro</legend>
                                     @csrf
@@ -33,13 +33,13 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
                                         <div class="col-md-8">
-                                            <input id="papellido" name="primerapellido" type="text" placeholder="Primer apellido" class="form-control">
+                                            <input id="papellido" name="apaterno" type="text" placeholder="Primer apellido" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
                                         <div class="col-md-8">
-                                            <input id="sapellido" name="segundoapellido" type="text" placeholder="Segundo apellido" class="form-control">
+                                            <input id="sapellido" name="amaterno" type="text" placeholder="Segundo apellido" class="form-control">
                                         </div>
                                     </div>
             
@@ -53,7 +53,7 @@
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-key bigicon"></i></span>
                                         <div class="col-md-8">
-                                            <input id="contraseña" name="constraseña" type="password" placeholder="contraseña" class="form-control">
+                                            <input id="contraseña" name="password" type="password" placeholder="contraseña" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">

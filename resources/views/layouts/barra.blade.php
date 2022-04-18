@@ -12,7 +12,7 @@
   <body>
     <!-- Navbar -->
 <!-- Navbar -->
-<nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <!-- Container wrapper -->
   <!-- Navbar brand -->
   <a class="navbar-brand mt-2 mt-lg-0" href="#">
@@ -26,14 +26,7 @@
   <!-- Left links -->
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-      <a class="nav-link" href="/registrar-cliente">Registrarse</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Team</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Projects</a>
-    </li>
+      <a class="nav-link"  href="/registrar-cliente">Registrarse</a>
   </ul>
   <!-- Left links -->
 </div>

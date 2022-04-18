@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutenticarController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ClienteController;
 
 
 /*
@@ -26,7 +27,7 @@ Route::get('login', function() {
     //buscara el archivo 'login' donde también se relizará la autenticación dentro de resoureces/views
 });
 
-Route::get('categoria', function() {
+Route::get('principal-categoria', function() {
     return view('categorias.categoria');
     //buscara el archivo 'login' donde también se relizará la autenticación dentro de resoureces/views
 });
@@ -43,7 +44,7 @@ Route::get('registrar-cliente', function() {
 });
 
 
-
+//valida que rol es el usuario 
 Route::post('/validar',[AutenticarController::class, 'validar']);
 
 //Listar categorias
@@ -57,3 +58,6 @@ Route::get('productos',[CategoriaController::class, 'listarmuebles']);
 
 //Listar todos los productos
 Route::get('all-productos',[ProductoController::class, 'listarproductos']);
+
+//crear usuario de tipo cliente (registro de anonimo)
+Route::post('crearcliente',[ClienteController::class,'crear']);
