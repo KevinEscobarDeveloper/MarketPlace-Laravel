@@ -91,5 +91,10 @@ Route::get('consignar/{id}',[UsuarioController::class, 'editarconsignar']);
 Route::post('rconsignar/{id}',[UsuarioController::class, 'rconsignar']);
 Route::put('updateconsignar/{id}',[UsuarioController::class, 'actualizarconsignar']);
 
+//Supervisor
+Route::get('principal-supervisor',[UsuarioController::class, 'principalsupervisor']);
+Route::get('editarcategoria/{id}',[UsuarioController::class, 'editarcategoria']);
+Route::put('updatecategoria/{id}',[UsuarioController::class, 'updatecategoria']);
+Route::delete('borrarcategoria/{id}',[UsuarioController::class, 'borrarcategoria']);
 
 

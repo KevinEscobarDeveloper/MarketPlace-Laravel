@@ -74,6 +74,58 @@ class UsuarioController extends Controller
                 $mensaje='Conseción exitosa';
                 return view("encargado.consignar",compact('id','valores','productos','mensaje'));
     }
-         //return redirect("/usuarios")->with('status','Student Updated Successfully');
   }
+
+  //--------SUPERVISOR------//
+    public function principalsupervisor(){
+        $categorias = DB::table('categorias')->get();
+        return view("supervisor.principal")->with('categorias',$categorias);
+    }
+
+    public function editarcategoria(Request $request, $id){
+        $categorias = DB::table('categorias')
+        ->where('categorias.id', '=', $id)
+        ->get();
+        $id = $id;
+        //var_dump($categorias);
+        return view("supervisor.editarcat",compact('id','categorias'));
+    }
+
+    public function updatecategoria(Request $request, $id){
+        $activo=0;
+        $valores=$request->all();
+        $categorias = DB::table('categorias')
+        ->where('categorias.id', '=', $id)
+        ->get();
+        $id = $id;
+        //var_dump($valores);
+
+        if(!empty($valores['activa'])){
+            $activo=1;
+        }
+        if(!empty($valores['imagen'])){
+            $file = $request->file('imagen'); 
+            $originalname = $file->getClientOriginalName();
+            $file->storeAs('public/cliente',$originalname);
+            $valores['imagen'] = '/storage/cliente/'.$originalname;
+        }
+        if(empty($valores['imagen'])){
+            $valores['imagen']=null;
+        }
+    
+        DB::table('categorias')->where('id', $id)->update(['nombre'=>$valores['nombre'],
+        'descripción'=>$valores['descripcion'],'imagen'=>$valores['imagen'],'activa'=>$activo]);
+        
+        $mensaje='Actualización exitosa';
+        return view("supervisor.editarcat",compact('id','categorias','mensaje'));
+    }
+
+    public function borrarcategoria(Request $request, $id){
+        DB::table('categorias')->where('id', $id)->delete();
+        $categorias = DB::table('categorias')->get();
+        
+        var_dump($id);
+        return view("supervisor.principal")->with('categorias',$categorias);
+    }
+
 }
