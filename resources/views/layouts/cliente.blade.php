@@ -65,16 +65,18 @@
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 mt-4">
-        <a
-          href="/all-productos"
-          class="list-group-item list-group-item-action py-2 ripple"
-          aria-current="true"
-        >
+        <a href="/productos-cliente" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Productos</span>
         </a>
-        <a href="/principal-categoria" class="list-group-item list-group-item-action py-2 ripple active">
+        <a href="/principal-cliente" class="list-group-item list-group-item-action py-2 ripple active">
           <i class="fas fa-chart-area fa-fw me-3"></i><span>Categorías</span>
         </a>
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-lock fa-fw me-3"></i><span>Ventas</span></a
+        >
+        <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis compras</span></a
+        >
       </div>
     </div>
   </nav>

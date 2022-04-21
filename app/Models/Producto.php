@@ -19,6 +19,7 @@ class Producto extends Model
         'precio',
         'imagen',
         'conseccionado',
+        'consignar',
         'motivo',
         'existencia',
         'pendientes',   

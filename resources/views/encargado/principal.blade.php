@@ -1,4 +1,4 @@
-@extends('layouts.barra')
+@extends('layouts.encargado')
 
 
 @section('content')
@@ -13,35 +13,81 @@
 </head>
 
 <body>
+  
+    @if(!empty($productos))
     <main style="margin-top: 58px;">
         <div class="container pt-4">
     <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
   width="100%">
   <thead>
     <tr>
+      <th>Categoria</th> 
       <th>Nombre</th>
       <th>Descripción</th>
       <th>Precio</th>
       <th>Imagen</th>
+      <th>Consecionado</th>
+      <th>Consignar</th>
+      <th>Motivo</th>
       <th>Existencia</th>
       <th>Pendiente</th>
+      <th>Modificar consignación</th>
     </tr>
   </thead>
   <tbody>
     @foreach ($productos as $producto)
+    @if ($producto->consignar!=1)
     <tr>
+      <td>{{$producto->catnombre}}</td>
       <td>{{$producto->nombre}}</td>
       <td>{{$producto->descripción}}</td>
       <td>{{$producto->precio}}</td>
       <td><img class="card-img-top" width ="50px" src={{$producto->imagen}}></td>
+      <td>{{$producto->consecionado}}</td>
+      <td>{{$producto->consignar}}</td>
+      <td>{{$producto->motivo}}</td>
       <td>{{$producto->existencia}}</td>
       <td>{{$producto->pendientes}}</td>
+      <td><a href="/consignar/{{$producto->id}}" class="btn btn-primary">Editar consignado</a></td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
 </div>
+ @endif
 
+    @if(!empty($usuarios))
+    <main style="margin-top: 58px;">
+        <div class="container pt-4">
+    <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
+  width="100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th> 
+      <th>Primer apellido</th>
+      <th>Segundo apellido</th>
+      <th>Correo</th>
+      <th>Restablecer contraseña</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($usuarios as $usuario)
+    <tr>
+      <td>{{$usuario->id}}</td>
+      <td>{{$usuario->nombre}}</td>
+      <td>{{$usuario->apellido_paterno}}</td>
+      <td>{{$usuario->apellido_materno}}</td>
+      <td>{{$usuario->correo}}</td>
+      <td><a href="/editar/{{$usuario->id}}" class="btn btn-primary">Restablecer contraseña</a></td>
+    </tr>
+    @endforeach
+  </tbody>
+    </table>
+    </div>
+ @endif
+    
     
 </body>
 

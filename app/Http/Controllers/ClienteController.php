@@ -22,6 +22,41 @@ class ClienteController extends Controller
     $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password)
      values(?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
      $valores['correo'],$valores['imagen'],'Cliente',1,$valores['password']]);
-     return  redirect('/principal-categoria');
+     \Session::put('usuario',$valores);
+     $categorias = DB::table('categorias')->get();
+     return view("clientes.principal")->with('categorias',$categorias);
+    }
+
+    public function principalcliente(){
+        $categorias = DB::table('categorias')->get();
+        return view("clientes.principal")->with('categorias',$categorias);
+    }
+    public function listarherramientas(){
+        $cproductos = DB::table('productos')
+        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
+        -> where ('categoria_productos.categoria_id',1)
+        ->get();
+        return view("clientes.principal")->with('cproductos',$cproductos);
+    }
+    public function listarropa(){
+        $cproductos = DB::table('productos')
+        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
+        -> where ('categoria_productos.categoria_id',2)
+        ->get();
+        return view("clientes.principal")->with('cproductos',$cproductos);
+    }
+    public function listaralimentos(){
+        $cproductos = DB::table('productos')
+        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
+        -> where ('categoria_productos.categoria_id',3)
+        ->get();
+        return view("clientes.principal")->with('cproductos',$cproductos);
+    }
+    public function listarmuebles(){
+        $cproductos = DB::table('productos')
+        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
+        -> where ('categoria_productos.categoria_id',4)
+        ->get();
+        return view("clientes.principal")->with('cproductos',$cproductos);
     }
 }
