@@ -119,13 +119,65 @@ class UsuarioController extends Controller
         $mensaje='Actualización exitosa';
         return view("supervisor.editarcat",compact('id','categorias','mensaje'));
     }
+    
 
     public function borrarcategoria(Request $request, $id){
         DB::table('categorias')->where('id', $id)->delete();
         $categorias = DB::table('categorias')->get();
         
-        var_dump($id);
         return view("supervisor.principal")->with('categorias',$categorias);
+    }
+
+    public function añadircategoria(Request $request){
+        $valores=$request->all();
+        $activo=0;
+
+        if(!empty($valores['activa'])){
+            $activo=1;
+        }
+        if(!empty($valores['imagen'])){
+            $file = $request->file('imagen'); 
+            $originalname = $file->getClientOriginalName();
+            $file->storeAs('public/cliente',$originalname);
+            $valores['imagen'] = '/storage/cliente/'.$originalname;
+        }
+        if(empty($valores['imagen'])){
+            $valores['imagen']=null;
+        }
+
+        $crear=DB::insert('insert into categorias(nombre,descripción,imagen,activa)
+        values(?,?,?,?)',[$valores['nombre'],$valores['descripcion'],$valores['imagen'],
+        $activo]);
+    
+        
+        $mensaje='Se añadio correctamente';
+        return view("supervisor.crearcat",compact('mensaje'));
+    }
+
+    public function crearcliente(Request $request){
+        //se guarda lo que viene en el formulario
+        $valores=$request->all();
+        //$productos = \Session::get('productos');
+        //array_push($productos, $valores);
+        //\Session::put('productos',$productos);
+    if(!empty($valores['imagen'])){
+    $file = $request->file('imagen'); 
+    $originalname = $file->getClientOriginalName();
+    $file->storeAs('public/cliente',$originalname);
+    $valores['imagen'] = '/storage/cliente/'.$originalname;
+    }
+
+    if(empty($valores['imagen'])){
+        $valores['imagen']=null;
+    }
+
+    $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password)
+     values(?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
+     $valores['correo'],$valores['imagen'],$valores['rol'],1,$valores['password']]);
+     \Session::put('usuario',$valores);
+     $categorias = DB::table('categorias')->get();
+     $mensaje='Se añadio correctamente';
+     return view("supervisor.crearuser",compact('mensaje'));
     }
 
 }

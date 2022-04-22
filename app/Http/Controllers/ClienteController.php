@@ -14,11 +14,16 @@ class ClienteController extends Controller
         //$productos = \Session::get('productos');
         //array_push($productos, $valores);
         //\Session::put('productos',$productos);
-    $file = $request->file('imagen'); 
-    $originalname = $file->getClientOriginalName();
-    $file->storeAs('public/cliente',$originalname);
-   
-    $valores['imagen'] = '/storage/cliente/'.$originalname;
+    if(!empty($valores['imagen'])){
+        $file = $request->file('imagen'); 
+        $originalname = $file->getClientOriginalName();
+        $file->storeAs('public/cliente',$originalname);
+        $valores['imagen'] = '/storage/cliente/'.$originalname;
+        }
+    
+    if(empty($valores['imagen'])){
+        $valores['imagen']=null;
+    }
     $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password)
      values(?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
      $valores['correo'],$valores['imagen'],'Cliente',1,$valores['password']]);

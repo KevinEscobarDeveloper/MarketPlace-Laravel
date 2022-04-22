@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             
             $table->foreignId('categoria_id')
-                ->constrained('categorias');
+                ->constrained('categorias')->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreignId('producto_id')
-                ->constrained('productos');
+                ->constrained('productos')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

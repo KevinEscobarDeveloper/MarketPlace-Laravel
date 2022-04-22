@@ -26,7 +26,9 @@
   <!-- Left links -->
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-      <a class="nav-link"  href="/registrar-cliente">Crear categoria</a>
+      <a class="nav-link"  href="/crear-categoria">Crear categoria</a>
+    <li class="nav-item">
+      <a class="nav-link"  href="/crear-usuario">Crear usuario</a>
   </ul>
   <!-- Left links -->
 </div>
@@ -82,6 +84,12 @@
       <div class="list-group list-group-flush mx-3 mt-4">
         <a href="/usuarios" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Vendedores</span>
+        </a>
+      </div>
+
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a href="productos-supervisor" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Productos</span>
         </a>
       </div>
 

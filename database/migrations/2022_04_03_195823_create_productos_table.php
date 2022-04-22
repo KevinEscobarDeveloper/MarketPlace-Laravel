@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer("pendientes")->nullable();
 
             $table->foreignId('usuarios_id')
-            ->constrained('usuarios');
+            ->constrained('usuarios')->onUpdate('cascade') ->onDelete('cascade');
            
 
         });

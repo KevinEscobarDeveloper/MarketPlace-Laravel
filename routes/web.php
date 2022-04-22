@@ -53,6 +53,17 @@ Route::get('principal-encargado', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
+//supervisor
+Route::get('crear-categoria', function() {
+    return view('supervisor.crearcat');
+    //buscara el archivo 'tablero' dentro de resoureces/views
+});
+
+Route::get('crear-usuario', function() {
+    return view('supervisor.crearuser');
+    //buscara el archivo 'tablero' dentro de resoureces/views
+});
+
 
 
 //valida que rol es el usuario 
@@ -71,6 +82,7 @@ Route::get('productos',[CategoriaController::class, 'listarmuebles']);
 Route::get('all-productos',[ProductoController::class, 'listarproductos']);
 Route::get('productos-cliente',[ProductoController::class, 'productoscliente']);
 Route::get('principal-encargado',[ProductoController::class, 'productosencargado']);
+Route::get('productos-supervisor',[ProductoController::class, 'productossupervisor']);
 
 //crear usuario de tipo cliente (registro de anonimo)
 Route::post('crearcliente',[ClienteController::class,'crear'])->middleware('arreglo');
@@ -96,5 +108,7 @@ Route::get('principal-supervisor',[UsuarioController::class, 'principalsuperviso
 Route::get('editarcategoria/{id}',[UsuarioController::class, 'editarcategoria']);
 Route::put('updatecategoria/{id}',[UsuarioController::class, 'updatecategoria']);
 Route::delete('borrarcategoria/{id}',[UsuarioController::class, 'borrarcategoria']);
+Route::post('añadircategoria',[UsuarioController::class, 'añadircategoria']);
+Route::post('crearclientesupervisor',[UsuarioController::class, 'crearcliente']);
 
 

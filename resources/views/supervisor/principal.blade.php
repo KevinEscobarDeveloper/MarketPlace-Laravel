@@ -13,6 +13,7 @@
 </head>
 
 <body>
+   
     <main style="margin-top: 58px;">
         <div class="container pt-4">
             @foreach ($categorias as $categoria)
@@ -22,7 +23,7 @@
             <div class="card-body">
             <h5 class="card-title">{{ $categoria->nombre }}</h5>
             <p class="card-text">{{ $categoria->descripción }}</p>
-            <a href="/{{ $categoria->nombre }}" class="btn btn-primary">Ir a la categoria</a>
+            {{-- <a href="/{{ $categoria->nombre }}" class="btn btn-primary">Ir a la categoria</a> --}}
             <a href="/editarcategoria/{{$categoria->id}}" class="btn btn-success">Editar</a>
             <form action="/borrarcategoria/{{$categoria->id}}" class="form-horizontal" method="post">
                 @csrf
