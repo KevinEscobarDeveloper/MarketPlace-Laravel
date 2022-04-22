@@ -180,4 +180,63 @@ class UsuarioController extends Controller
      return view("supervisor.crearuser",compact('mensaje'));
     }
 
+    public function verusuarios(Request $request){
+
+        $usuarios = DB::table('usuarios')->get();
+
+        return view("supervisor.usuarios")->with('usuarios',$usuarios);
+    }
+
+    public function editarusuario(Request $request, $id){
+        $usuarios = DB::table('usuarios')
+        ->where('usuarios.id', '=', $id)
+        ->get();
+        $id = $id;
+        //var_dump($categorias);
+        return view("supervisor.edituser",compact('id','usuarios'));
+    }
+
+    public function updateusuario(Request $request, $id){
+        $activo=0;
+        $valores=$request->all();
+        $usuarios = DB::table('usuarios')
+        ->where('usuarios.id', '=', $id)
+        ->get();
+        //$id = $id;
+        //var_dump($valores);
+
+        if(!empty($valores['activa'])){
+            $activo=1;
+        }
+        if(!empty($valores['imagen'])){
+            $file = $request->file('imagen'); 
+            $originalname = $file->getClientOriginalName();
+            $file->storeAs('public/cliente',$originalname);
+            $valores['imagen'] = '/storage/cliente/'.$originalname;
+        }
+        if(empty($valores['imagen'])){
+            $valores['imagen']=null;
+        }
+    
+        DB::table('usuarios')->where('id', $id)->update(['nombre'=>$valores['nombre'],
+        'apellido_paterno'=>$valores['apellido_paterno'],'apellido_materno'=>$valores['apellido_materno'],
+        'correo'=>$valores['correo'],'imagen'=>$valores['imagen'],'rol'=>$valores['rol'],'activo'=>$activo]);
+        
+        $mensaje='Actualización exitosa';
+        return view("supervisor.edituser",compact('id','usuarios','mensaje'));
+    }
+
+    public function editarpasswordsup(Request $request, $id){
+        $id = $id;
+         return view("supervisor.editcontraseña",compact('id'));
+    }
+
+    public function actualizarcontraseñasup(Request $request,$id){
+        $id = $id;
+        $valores=$request->all();
+        DB::table('usuarios')->where('id', $id)->update(['password' =>$valores['contraseña1']]);  
+        $mensaje='Actualización exitosa';
+        return view("supervisor.editcontraseña",compact('id','mensaje'));;
+        }
+
 }

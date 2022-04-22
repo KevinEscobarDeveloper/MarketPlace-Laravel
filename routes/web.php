@@ -110,5 +110,9 @@ Route::put('updatecategoria/{id}',[UsuarioController::class, 'updatecategoria'])
 Route::delete('borrarcategoria/{id}',[UsuarioController::class, 'borrarcategoria']);
 Route::post('añadircategoria',[UsuarioController::class, 'añadircategoria']);
 Route::post('crearclientesupervisor',[UsuarioController::class, 'crearcliente']);
-
+Route::get('verusuario',[UsuarioController::class, 'verusuarios']);
+Route::get('editar-usuario/{id}',[UsuarioController::class, 'editarusuario']);
+Route::put('updateusuario/{id}',[UsuarioController::class, 'updateusuario']);
+Route::get('editar-password/{id}',[UsuarioController::class, 'editarpasswordsup']);
+Route::put('editarpasswordsup/{id}',[UsuarioController::class, 'actualizarcontraseñasup']);
 

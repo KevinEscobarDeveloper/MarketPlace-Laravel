@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("nombre",50);
             $table->string("descripción",100);
-            $table->string("imagen",100)->nullable();
+            $table->string("imagen",150)->nullable();
             $table->tinyInteger("activa");
         });
     }
