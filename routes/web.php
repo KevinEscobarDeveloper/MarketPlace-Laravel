@@ -87,13 +87,17 @@ Route::get('productos-supervisor',[ProductoController::class, 'productossupervis
 //crear usuario de tipo cliente (registro de anonimo)
 Route::post('crearcliente',[ClienteController::class,'crear'])->middleware('arreglo');
 
-//Cliente principal
+//Cliente l
 Route::get('principal-cliente',[ClienteController::class, 'principalcliente']);
 //Listar productos por categorias para los clientes
 Route::get('clienteHerramientas',[ClienteController::class, 'listarherramientas']);
 Route::get('clienteRopa',[ClienteController::class, 'listarropa']);
 Route::get('clienteAlimentos',[ClienteController::class, 'listaralimentos']);
 Route::get('clienteMuebles',[ClienteController::class, 'listarmuebles']);
+Route::get('pregunta/{id}',[ClienteController::class, 'preguntar']);
+Route::post('realizarpregunta/{id}',[ClienteController::class, 'realizarpregunta']);
+
+
 
 //Encargado
 Route::get('usuarios',[UsuarioController::class, 'listarusuarios']);

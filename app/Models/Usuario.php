@@ -26,5 +26,9 @@ class Usuario extends Model
     public function productos(){
         return $this->hasMany(Producto::class, 'usuarios_id','id');
     }
+
+    public function preguntas(){
+        return $this->hasMany(Pregunta::class, 'usuarios_id','id');
+    }
 }
 

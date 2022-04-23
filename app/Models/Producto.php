@@ -33,4 +33,8 @@ class Producto extends Model
         return $this->belongsTo(Usuario::class,'usuarios_id','id');
     }
 
+    public function preguntas(){
+        return $this->hasMany(Pregunta::class, 'productos_id','id');
+    }
+
 }

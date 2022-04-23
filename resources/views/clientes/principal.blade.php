@@ -45,6 +45,7 @@
       <th>Motivo</th>
       <th>Existencia</th>
       <th>Pendiente</th>
+      <th>Preguntar</th>
     </tr>
   </thead>
   <tbody>
@@ -59,6 +60,7 @@
       <td>{{$producto->motivo}}</td>
       <td>{{$producto->existencia}}</td>
       <td>{{$producto->pendientes}}</td>
+      <td><a href="/pregunta/{{ $producto->id }}" class="btn btn-primary">Realizar pregunta</a></td>
     </tr>
     @endforeach
   </tbody>
