@@ -64,6 +64,11 @@ Route::get('crear-usuario', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
+Route::get('tablero', function() {
+    return view('supervisor.tablero');
+    //buscara el archivo 'tablero' dentro de resoureces/views
+});
+
 
 
 //valida que rol es el usuario 

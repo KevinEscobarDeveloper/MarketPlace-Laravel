@@ -86,17 +86,30 @@ class ClienteController extends Controller
         $id = $id;
         $valores=$request->all();
         $usuario = \Session::get('usuario');
-        var_dump($usuario);
+       
         if(empty($valores['categoria'])){
             // $id = DB::table('usuarios')
             // ->where('usuarios.nombre', '=', $usuario['nombre'])
             // ->where('usuarios.correo', '=', $usuario['correo'])
             // ->where('usuarios.password', '=', $usuario['password'])
             // ->get();
-            $crear=DB::insert('nsert into preguntas(pregunta,productos_id)
-            values(?,?)',[$valores['pregunta'],$id]);
+            $crear=DB::insert('insert into preguntas(pregunta,productos_id,usuarios_id)
+            values(?,?,?)',[$valores['pregunta'],$id,$usuario['id']]);
+
+            //----volvemos a redirigir a la pagina pero tenemos que mandar los datos----//
+            $usuarios = DB::table('usuarios')
+            -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
+            ->select('usuarios.nombre as usernombre','productos.nombre',
+            'usuarios.apellido_paterno','usuarios.apellido_materno',
+            'productos.precio','productos.imagen','productos.consecionado')
+            -> where ('usuarios.id','=',$id)
+            ->get();
+
+            $productos = DB::table('productos')->get();
+            //--------------//
+
             $mensaje='Pregunta realizada';
-            return view("clientes.pregunta",compact('id','mensaje'));
+            return view("clientes.pregunta",compact('id','mensaje','usuarios','productos'));
         }
     }
 }

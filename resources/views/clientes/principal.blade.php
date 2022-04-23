@@ -82,6 +82,7 @@
       <th>Motivo</th>
       <th>Existencia</th>
       <th>Pendiente</th>
+      <th>Preguntar</th>
     </tr>
   </thead>
   <tbody>
@@ -95,6 +96,7 @@
       <td>{{$cproducto->motivo}}</td>
       <td>{{$cproducto->existencia}}</td>
       <td>{{$cproducto->pendientes}}</td>
+      <td><a href="/pregunta/{{ $cproducto->id }}" class="btn btn-primary">Realizar pregunta</a></td>
     </tr>
     @endforeach
   </tbody>
