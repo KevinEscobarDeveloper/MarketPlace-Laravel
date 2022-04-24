@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    <link href="{{ asset('css/tablero.css')}}" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -19,30 +19,29 @@
 <body>
 
 
-    <div class="container-fluid">
-    <div class="row">
+    <main style="margin-top: 58px;">
+        <div class="container pt-4">
             <main class="main col">
                 <div class="container">
                     <div class="row">
 
                         <div class="bg-success text-white text-center m-1">
-                            <div class="card-header">Total vendidos</div>
+                            <div class="card-header">Usuarios registrados</div>
                             <div class="card-body">
-                                <h5 class="card-title"><span id="idVendidos">15</span></h5>
-                                <p class="card-text">Baja en las ventas vs mes anterior</p>
+                                <h5 class="card-title"><span id="idVendidos">{{$count}}</span></h5>
                             </div>
                         </div>
 
-                        <div class="bg-warning text-white text-center m-1">
-                            <div class="card-header">Total en almacen</div>
+                        <div class="bg-warning text-white text-center m-">
+                            <div class="card-header">Categorias registradas</div>
                             <div class="card-body">
-                                <h5 class="card-title"><span id="idVendidos">25</span></h5>
-                                <p class="card-text">Inventario mayor vs mes anterior</p>
+                                <h5 class="card-title"><span id="idVendidos">{{$countcat}}</span></h5>
                             </div>
                         </div>
 
+                    
                         <div class="bg-info text-white text-center m-1">
-                            <div class="card-header">Total Ingresos</div>
+                            <div class="card-header">Transacciones del mes</div>
                             <div class="card-body">
                                 <h5 class="card-title"><span id="idVendidos">105</span></h5>
                                 <p class="card-text">Disminución de ingresos vs mes anterior</p>
@@ -69,7 +68,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Ganancias de productos en el mes'
+                            text: 'Productos más vendidos del mes'
                         }
                     }
                 });

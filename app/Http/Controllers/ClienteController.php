@@ -26,9 +26,10 @@ class ClienteController extends Controller
     if(empty($valores['imagen'])){
         $valores['imagen']=null;
     }
-    $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password)
-     values(?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
-     $valores['correo'],$valores['imagen'],'Cliente',1,$valores['password']]);
+    $fecha = date('y/m/d');
+    $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password,fecha)
+     values(?,?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
+     $valores['correo'],$valores['imagen'],'Cliente',1,$valores['password'],$fecha]);
      $id = DB::table('usuarios')->latest('id')->first()->id;
      $valores['id']=$id;
      \Session::put('usuario',$valores);

@@ -72,8 +72,8 @@
         </a>
       </div>
       <div class="list-group list-group-flush mx-3 mt-4">
-        <a href="/usuarios" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+        <a href="/Tablero" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Tablero</span>
         </a>
       </div>
       <div class="list-group list-group-flush mx-3 mt-4">
@@ -82,7 +82,7 @@
         </a>
       </div>
       <div class="list-group list-group-flush mx-3 mt-4">
-        <a href="/usuarios" class="list-group-item list-group-item-action py-2 ripple">
+        <a href="/Vendedores" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Vendedores</span>
         </a>
       </div>

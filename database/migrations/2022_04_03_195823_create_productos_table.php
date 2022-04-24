@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string("motivo",100)->nullable();
             $table->integer("existencia")->nullable();
             $table->integer("pendientes")->nullable();
+            $table->date("fecha")->nullable();
+           
+
 
             $table->foreignId('usuarios_id')
             ->constrained('usuarios')->onUpdate('cascade') ->onDelete('cascade');

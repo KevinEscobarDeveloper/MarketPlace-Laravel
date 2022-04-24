@@ -64,11 +64,6 @@ Route::get('crear-usuario', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
-Route::get('tablero', function() {
-    return view('supervisor.tablero');
-    //buscara el archivo 'tablero' dentro de resoureces/views
-});
-
 
 
 //valida que rol es el usuario 
@@ -88,6 +83,7 @@ Route::get('all-productos',[ProductoController::class, 'listarproductos']);
 Route::get('productos-cliente',[ProductoController::class, 'productoscliente']);
 Route::get('principal-encargado',[ProductoController::class, 'productosencargado']);
 Route::get('productos-supervisor',[ProductoController::class, 'productossupervisor']);
+Route::get('productosdes',[ProductoController::class, 'productosdesconsignar']);
 
 //crear usuario de tipo cliente (registro de anonimo)
 Route::post('crearcliente',[ClienteController::class,'crear'])->middleware('arreglo');
@@ -111,6 +107,9 @@ Route::put('editarpassword/{id}',[UsuarioController::class, 'actualizarcontrase√
 Route::get('consignar/{id}',[UsuarioController::class, 'editarconsignar']);
 Route::post('rconsignar/{id}',[UsuarioController::class, 'rconsignar']);
 Route::put('updateconsignar/{id}',[UsuarioController::class, 'actualizarconsignar']);
+Route::get('desconsignar/{id}',[UsuarioController::class, 'desconsignarproducto']);
+Route::put('updatedesconsignar/{id}',[UsuarioController::class, 'actualizardesconsignar']);
+
 
 //Supervisor
 Route::get('principal-supervisor',[UsuarioController::class, 'principalsupervisor']);
@@ -124,4 +123,8 @@ Route::get('editar-usuario/{id}',[UsuarioController::class, 'editarusuario']);
 Route::put('updateusuario/{id}',[UsuarioController::class, 'updateusuario']);
 Route::get('editar-password/{id}',[UsuarioController::class, 'editarpasswordsup']);
 Route::put('editarpasswordsup/{id}',[UsuarioController::class, 'actualizarcontrase√±asup']);
+Route::get('Tablero',[UsuarioController::class, 'tablerodatos']);
+Route::get('kardex/{id}',[UsuarioController::class, 'verkardex']);
+Route::get('Vendedores',[UsuarioController::class, 'vendedor']);
+Route::get('Historialvendedor/{id}',[UsuarioController::class, 'historialvendedor']);
 

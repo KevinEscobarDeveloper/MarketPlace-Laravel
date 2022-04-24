@@ -7,6 +7,8 @@ use DB;
 
 class UsuarioController extends Controller
 {
+
+    //--------ENCARGADO-----//
     public function listarusuarios(){
         $usuarios = DB::table('usuarios')
         -> where ('usuarios.rol','!=','Supervisor')
@@ -50,6 +52,14 @@ class UsuarioController extends Controller
         return view("encargado.consignar",compact('id','productos','valores'));
     }
 
+    public function desconsignarproducto(Request $request, $id){
+        $productos = DB::table('productos')
+        ->where('productos.id', '=', $id)
+        ->get();
+       
+        return view("encargado.desconsignar",compact('id','productos'));
+    }
+
     public function actualizarconsignar(Request $request,$id){
         $valores=$request->all();
         
@@ -75,6 +85,18 @@ class UsuarioController extends Controller
                 return view("encargado.consignar",compact('id','valores','productos','mensaje'));
     }
   }
+
+  public function actualizardesconsignar(Request $request,$id){
+    $valores=$request->all();
+    
+    $productos = DB::table('productos')
+    ->where('productos.id', '=', $id)
+    ->get();
+
+    DB::table('productos')->where('id', $id)->update(['consecionado'=>0,'consignar'=>0]);
+    $mensaje='Producto desconsignado';
+    return view("encargado.desconsignar",compact('id','valores','productos','mensaje'));
+}
 
   //--------SUPERVISOR------//
     public function principalsupervisor(){
@@ -237,6 +259,74 @@ class UsuarioController extends Controller
         DB::table('usuarios')->where('id', $id)->update(['password' =>$valores['contraseña1']]);  
         $mensaje='Actualización exitosa';
         return view("supervisor.editcontraseña",compact('id','mensaje'));;
+        }
+
+    public function tablerodatos(){
+        $count=DB::table('usuarios')->count();
+        $countcat=DB::table('categorias')->count();
+       
+        $mensaje='Actualización exitosa';
+        return view("supervisor.tablero",compact('count','countcat'));;
+        }
+
+    public function verkardex($id){
+        $consecionado=0;
+        $preguntas = DB::table('preguntas')
+        -> join('productos','preguntas.productos_id', '=', 'productos.id')
+        ->where('productos.id','=',$id)
+        ->count();
+
+     
+        $productos = DB::table('productos')->where('productos.id','=',$id)
+        ->get();
+
+        foreach($productos as $producto){
+        $precio =$producto->precio;
+      
+                $consecionado =$producto->consecionado;       
+        }
+        if(empty($consecionado)){
+            $consecionado=0;
+        }
+        if(!empty($consecionado)){
+            $consecionado=$consecionado/100;
+        }
+        $ganancia =$precio-($precio*$consecionado);
+        return view("supervisor.kardex",compact('preguntas','productos','ganancia'));
+        }
+
+        public function vendedor(){
+            
+        $usuarios = DB::table('usuarios')
+        -> join('productos','usuarios.id', '=', 'productos.id')
+        ->select('usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+        'usuarios.fecha','usuarios.id','usuarios.imagen')
+        ->get();
+
+        return view("supervisor.vendedores",compact('usuarios'));
+        }
+
+    public function historialvendedor($id){
+        
+        $usuarios = DB::table('usuarios')
+        -> join('productos','usuarios.id', '=', 'productos.id')
+        ->select('usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+        'usuarios.fecha','usuarios.id','usuarios.imagen')
+        ->where('usuarios.id','=',$id)
+        ->get();
+
+        $productos = DB::table('productos')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        ->where('productos.usuarios_id','=',$id)
+        ->count();
+
+        $consignados = DB::table('productos')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        ->where([['productos.usuarios_id','=',$id],['productos.consignar','=',1],
+        ['usuarios.id','=',$id]])
+        ->count();
+
+        return view("supervisor.historial",compact('usuarios','productos','consignados'));
         }
 
 }

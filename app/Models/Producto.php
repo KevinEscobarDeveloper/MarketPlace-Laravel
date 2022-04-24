@@ -9,6 +9,7 @@ class Producto extends Model
 {
 
     use HasFactory;
+    
 
     protected $table = 'productos';
     // public $timestamps = false;
@@ -23,6 +24,7 @@ class Producto extends Model
         'motivo',
         'existencia',
         'pendientes',   
+        'fecha',
     ];
     
     public function categorias(){

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('rol', ['Cliente','Encargado','Contador','Supervisor'])->default('Cliente');
             $table->tinyInteger("activo");
             $table->string("password",100);
+            $table->date("fecha")->nullable();
         });
     }
 

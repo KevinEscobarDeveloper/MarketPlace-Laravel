@@ -20,7 +20,8 @@ class Usuario extends Model
         'imagen',
         'rol',
         'activo',
-        'password',   
+        'password',
+        'fecha',   
     ];
 
     public function productos(){

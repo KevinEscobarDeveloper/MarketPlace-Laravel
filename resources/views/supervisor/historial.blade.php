@@ -18,44 +18,34 @@
         <div class="container pt-4">
     <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
   width="100%">
-  <thead>
+  <table class="table">
+    <thead class="thead-dark">
     <tr>
-      <th>Categoria</th> 
-      <th>Nombre</th>
-      <th>Descripción</th>
-      <th>Precio</th>
-      <th>Imagen</th>
-      <th>Consecionado</th>
-      <th>Consignar</th>
-      <th>Motivo</th>
-      <th>Existencia</th>
-      <th>Pendiente</th>
-      <th>Kardex</th>
+      <th>Nombre</th> 
+      <th>Fecha de alta</th>
+      <th>Transacciones</th>
+      <th>Productos registrados</th>
+      <th>Productos consignados</th>
+      <th>Productos comprados</th>
+      <th>Productos en oferta</th>
     </tr>
   </thead>
   <tbody>
-    @foreach ($productos as $producto)
+    @foreach ($usuarios as $usuario)
     <tr>
-      <td>{{$producto->catnombre}}</td>
-      <td>{{$producto->nombre}}</td>
-      <td>{{$producto->descripción}}</td>
-      <td>{{$producto->precio}}</td>
-      <td><img class="card-img-top" width ="50px" src={{$producto->imagen}}></td>
-      <td>{{$producto->consecionado}}</td>
-      <td>{{$producto->consignar}}</td>
-      <td>{{$producto->motivo}}</td>
-      <td>{{$producto->existencia}}</td>
-      <td>{{$producto->pendientes}}</td>
-      <td><a href="/kardex/{{$producto->id}}" class="btn btn-success">Kardex</a></td>
+      <td>{{$usuario->nombre}} {{$usuario->apellido_paterno}} {{$usuario->apellido_materno}}</td>
+      <td>{{$usuario->fecha}}</td>
+      <td></td>
+      <td>{{$productos}}</td>
+      <td>{{$consignados}}</td>
+      <td></td>
+      <td></td>
     </tr>
     @endforeach
   </tbody>
 </table>
 </div>
-
+</main>
 </body>
 </html>
 @endsection
-
-
-

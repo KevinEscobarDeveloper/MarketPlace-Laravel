@@ -1,4 +1,4 @@
-@extends('layouts.supervisor')
+@extends('layouts.encargado')
 
 
 @section('content')
@@ -13,7 +13,8 @@
 </head>
 
 <body>
-   
+  
+    @if(!empty($productos))
     <main style="margin-top: 58px;">
         <div class="container pt-4">
     <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
@@ -30,11 +31,12 @@
       <th>Motivo</th>
       <th>Existencia</th>
       <th>Pendiente</th>
-      <th>Kardex</th>
+      <th>Modificar consignación</th>
     </tr>
   </thead>
   <tbody>
     @foreach ($productos as $producto)
+    @if ($producto->consignar==1)
     <tr>
       <td>{{$producto->catnombre}}</td>
       <td>{{$producto->nombre}}</td>
@@ -46,16 +48,17 @@
       <td>{{$producto->motivo}}</td>
       <td>{{$producto->existencia}}</td>
       <td>{{$producto->pendientes}}</td>
-      <td><a href="/kardex/{{$producto->id}}" class="btn btn-success">Kardex</a></td>
+      <td><a href="/desconsignar/{{$producto->id}}" class="btn btn-primary">Desconsignar</a></td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
 </div>
+ @endif
+    
+</body>
 
 </body>
 </html>
 @endsection
-
-
-
