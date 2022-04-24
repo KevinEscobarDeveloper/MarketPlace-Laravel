@@ -13,30 +13,46 @@ class AutenticarController extends Controller
         $correo = DB::table('usuarios')->select('correo')->where('correo', '=', $correo)->value('correo');
         $rol = DB::table('usuarios')->select('rol')->where('correo', '=', $correo)->value('rol');
         $contraseña = DB::table('usuarios')->select('password')->where('correo', '=', $correo)->value('password');
-        
+        $mensajeerror='Error en la contraseña';
+        //-----Obtenemos los datos del usuario que ingreso para la sesión----//
+        $usuario = DB::table('usuarios')
+        ->select('usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+        'usuarios.rol','usuarios.id','usuarios.activo')
+        ->where([['usuarios.correo','=',$correo],['usuarios.password','=',$contraseña]])
+        ->get();
+
         switch ($rol) {
             case 'Supervisor':
-                if($request->input('contraseña')==$contraseña)
-                    return  redirect('/tablero');
-                else return  redirect('/login');
+                if($request->input('contraseña')==$contraseña){
+                    \Session::put('usuario',$usuario);
+                    return  redirect('/principal-supervisor');
+                }
+                else return view("login.login",compact('mensajeerror'));
                 break;
             case 'Cliente':
-                if($request->input('contraseña')==$contraseña)
-                    return  redirect('/cuenta');
-                else return  redirect('/login');
+                if($request->input('contraseña')==$contraseña){
+                    \Session::put('usuario',$usuario);
+                    return  redirect('/principal-cliente');
+                }
+                else return view("login.login",compact('mensajeerror'));
                 break;
             case 'Encargado':
-                if($request->input('contraseña')==$contraseña)
-                    return  redirect('/tablero');
-                else return  redirect('/login');
+                if($request->input('contraseña')==$contraseña){
+                    \Session::put('usuario',$usuario);
+                    return  redirect('/principal-encargado');
+                }
+                else return view("login.login",compact('mensajeerror'));
                 break;
             case 'Contador':
-                if($request->input('contraseña')==$contraseña)
-                    return  redirect('/totalizar');
+                if($request->input('contraseña')==$contraseña){
+                    \Session::put('usuario',$usuario);
+                    return  redirect('/contador.principal');
+                }
                 else return  redirect('/login');
                 break;
             default:
-                return  redirect('/login')->with('error', 'Usuario no registrado');
+                $mensaje='Usuario no registrado';
+                return  redirect('/login')->with('mensaje');
                 break;
         }
     }

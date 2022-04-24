@@ -49,6 +49,12 @@
 							<button type="submit" name="login" class="btn login_btn">Login</button>
 						</div>
 					</div>
+					@if (!empty($mensaje))
+                                    <label >{{$mensaje}}</label>
+                        @endif
+					@if (!empty($mensajeerror))
+								<label >{{$mensajeerror}}</label>
+					@endif
 			</form>
 		</div>
 	</div>
