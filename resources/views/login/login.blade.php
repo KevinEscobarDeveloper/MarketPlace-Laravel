@@ -48,6 +48,9 @@
 						<div class="d-flex justify-content-center mt-3 login_container">
 							<button type="submit" name="login" class="btn login_btn">Login</button>
 						</div>
+						<div class="d-flex justify-content-center mt-3 login_container">
+						<a href="/principal-categoria" class="btn btn-success">Entrar como anonimo</a>
+						</div>
 					</div>
 					@if (!empty($mensaje))
                                     <label >{{$mensaje}}</label>
