@@ -27,10 +27,10 @@ class UsuarioController extends Controller
     public function actualizarcontraseña(Request $request,$id){
     $valores=$request->all();
     DB::table('usuarios')->where('id', $id)->update(['password' =>$valores['contraseña1']]);  
-    return redirect("/usuarios")->with('status','Student Updated Successfully');
+    return redirect("/usuarios")->with();
     }
 
-    public function editarpasword(Request $request, $id){
+    public function editarpasword($id){
         $id = $id;
          return view("encargado.editar",compact('id'));
     }
@@ -52,7 +52,7 @@ class UsuarioController extends Controller
         return view("encargado.consignar",compact('id','productos','valores'));
     }
 
-    public function desconsignarproducto(Request $request, $id){
+    public function desconsignarproducto($id){
         $productos = DB::table('productos')
         ->where('productos.id', '=', $id)
         ->get();
@@ -176,12 +176,9 @@ class UsuarioController extends Controller
         return view("supervisor.crearcat",compact('mensaje'));
     }
 
-    public function crearcliente(Request $request){
+    public function crearusuariosup(Request $request){
         //se guarda lo que viene en el formulario
         $valores=$request->all();
-        //$productos = \Session::get('productos');
-        //array_push($productos, $valores);
-        //\Session::put('productos',$productos);
     if(!empty($valores['imagen'])){
     $file = $request->file('imagen'); 
     $originalname = $file->getClientOriginalName();
@@ -265,7 +262,6 @@ class UsuarioController extends Controller
         $count=DB::table('usuarios')->count();
         $countcat=DB::table('categorias')->count();
        
-        $mensaje='Actualización exitosa';
         return view("supervisor.tablero",compact('count','countcat'));;
         }
 
@@ -298,9 +294,10 @@ class UsuarioController extends Controller
         public function vendedor(){
             
         $usuarios = DB::table('usuarios')
-        -> join('productos','usuarios.id', '=', 'productos.id')
+        -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
         ->select('usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
         'usuarios.fecha','usuarios.id','usuarios.imagen')
+        ->groupBy('usuarios.id')
         ->get();
 
         return view("supervisor.vendedores",compact('usuarios'));

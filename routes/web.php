@@ -40,23 +40,23 @@ Route::get('tablero', function() {
 
 Route::get('principal-cliente', function() {
     return view('clientes.principal');
-    //buscara el archivo 'tablero' dentro de resoureces/views
+    
 });
 //ventana de cliente
 Route::get('registrar-cliente', function() {
     return view('clientes.registrar');
-    //buscara el archivo 'tablero' dentro de resoureces/views
+    
 });
 
 Route::get('principal-encargado', function() {
     return view('clientes.registrar');
-    //buscara el archivo 'tablero' dentro de resoureces/views
+ 
 });
 
 //supervisor
 Route::get('crear-categoria', function() {
     return view('supervisor.crearcat');
-    //buscara el archivo 'tablero' dentro de resoureces/views
+ 
 });
 
 Route::get('crear-usuario', function() {
@@ -72,11 +72,8 @@ Route::post('/validar',[AutenticarController::class, 'validar']);
 //Listar categorias
 Route::get('principal-categoria',[CategoriaController::class, 'listarcategorias']);
 //Listar productos por categorias 
-Route::get('Herramientas',[CategoriaController::class, 'listarherramientas']);
-Route::get('Ropa',[CategoriaController::class, 'listarropa']);
-Route::get('Alimentos',[CategoriaController::class, 'listaralimentos']);
-Route::get('Muebles',[CategoriaController::class, 'listarmuebles']);
-Route::get('productos',[CategoriaController::class, 'listarmuebles']);
+Route::get('Pcategoria/{id}',[CategoriaController::class, 'listarproductoscat']);
+
 
 //Listar todos los productos segun el rol
 Route::get('all-productos',[ProductoController::class, 'listarproductos']);
@@ -91,13 +88,9 @@ Route::post('crearcliente',[ClienteController::class,'crear'])->middleware('arre
 //Cliente l
 Route::get('principal-cliente',[ClienteController::class, 'principalcliente']);
 //Listar productos por categorias para los clientes
-Route::get('clienteHerramientas',[ClienteController::class, 'listarherramientas']);
-Route::get('clienteRopa',[ClienteController::class, 'listarropa']);
-Route::get('clienteAlimentos',[ClienteController::class, 'listaralimentos']);
-Route::get('clienteMuebles',[ClienteController::class, 'listarmuebles']);
+Route::get('categoria/{id}',[ClienteController::class, 'listarcategorias']);
 Route::get('pregunta/{id}',[ClienteController::class, 'preguntar']);
 Route::post('realizarpregunta/{id}',[ClienteController::class, 'realizarpregunta']);
-
 
 
 //Encargado
@@ -117,7 +110,7 @@ Route::get('editarcategoria/{id}',[UsuarioController::class, 'editarcategoria'])
 Route::put('updatecategoria/{id}',[UsuarioController::class, 'updatecategoria']);
 Route::delete('borrarcategoria/{id}',[UsuarioController::class, 'borrarcategoria']);
 Route::post('añadircategoria',[UsuarioController::class, 'añadircategoria']);
-Route::post('crearclientesupervisor',[UsuarioController::class, 'crearcliente']);
+Route::post('crearclientesupervisor',[UsuarioController::class, 'crearusuariosup']);
 Route::get('verusuario',[UsuarioController::class, 'verusuarios']);
 Route::get('editar-usuario/{id}',[UsuarioController::class, 'editarusuario']);
 Route::put('updateusuario/{id}',[UsuarioController::class, 'updateusuario']);

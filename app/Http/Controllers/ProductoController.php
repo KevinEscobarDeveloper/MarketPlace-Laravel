@@ -9,6 +9,7 @@ class ProductoController extends Controller
 {
     public function listarproductos(){
         $productos = DB::table('productos')
+        ->where([['productos.consignar','=',1]])
         ->get();
         return view("categorias.productos")->with('productos',$productos);
     }

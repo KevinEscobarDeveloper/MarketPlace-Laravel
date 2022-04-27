@@ -22,7 +22,7 @@
                             	
                             <form action="/crearclientesupervisor" class="form-horizontal" method="post" enctype="multipart/form-data">
                                 <fieldset>
-                                    <legend class="text-center header">Registro</legend>
+                                    <legend class="text-center header">Crear usuario</legend>
                                     @csrf
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>

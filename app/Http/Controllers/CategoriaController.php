@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Producto;
+use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
@@ -12,32 +14,14 @@ class CategoriaController extends Controller
         $categorias = DB::table('categorias')->get();
         return view("categorias.categoria")->with('categorias',$categorias);
     }
-    public function listarherramientas(){
-        $productos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',1)
-        ->get();
-        return view("categorias.productos")->with('productos',$productos);
-    }
-    public function listarropa(){
-        $productos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',2)
-        ->get();
-        return view("categorias.productos")->with('productos',$productos);
-    }
-    public function listaralimentos(){
-        $productos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',3)
-        ->get();
-        return view("categorias.productos")->with('productos',$productos);
-    }
-    public function listarmuebles(){
-        $productos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',4)
-        ->get();
+    public function listarproductoscat($id){
+        $id=$id;
+
+        $productos=Producto::select('*')
+                   ->join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
+                   -> where ([['categoria_productos.categoria_id',$id],['productos.consignar','=',1]])
+                   ->get();
+
         return view("categorias.productos")->with('productos',$productos);
     }
 }

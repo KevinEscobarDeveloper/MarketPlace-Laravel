@@ -23,7 +23,7 @@
             <div class="card-body">
             <h5 class="card-title">{{ $categoria->nombre }}</h5>
             <p class="card-text">{{ $categoria->descripción }}</p>
-            <a href="/cliente{{ $categoria->nombre }}" class="btn btn-primary">Ir a la categoria</a>
+            <a href="/categoria/{{ $categoria->id }}" class="btn btn-primary">Ir a la categoria</a>
             </div>
         </div>
     </div>

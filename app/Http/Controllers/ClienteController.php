@@ -31,8 +31,10 @@ class ClienteController extends Controller
      values(?,?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
      $valores['correo'],$valores['imagen'],'Cliente',1,$valores['password'],$fecha]);
      $id = DB::table('usuarios')->latest('id')->first()->id;
-     $valores['id']=$id;
-     \Session::put('usuario',$valores);
+     
+     $usuario = Usuario::select('nombre','apellido_paterno','apellido_materno','correo','id')
+     ->where('id',$id)->get();
+     \Session::put('usuario',$usuario);
      $categorias = DB::table('categorias')->get();
      return view("clientes.principal")->with('categorias',$categorias);
     }
@@ -41,34 +43,14 @@ class ClienteController extends Controller
         $categorias = DB::table('categorias')->get();
         return view("clientes.principal")->with('categorias',$categorias);
     }
-    public function listarherramientas(){
+    public function listarcategorias($id){
         $cproductos = DB::table('productos')
         -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',1)
+        -> where ('categoria_productos.categoria_id',$id)
         ->get();
         return view("clientes.principal")->with('cproductos',$cproductos);
     }
-    public function listarropa(){
-        $cproductos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',2)
-        ->get();
-        return view("clientes.principal")->with('cproductos',$cproductos);
-    }
-    public function listaralimentos(){
-        $cproductos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',3)
-        ->get();
-        return view("clientes.principal")->with('cproductos',$cproductos);
-    }
-    public function listarmuebles(){
-        $cproductos = DB::table('productos')
-        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
-        -> where ('categoria_productos.categoria_id',4)
-        ->get();
-        return view("clientes.principal")->with('cproductos',$cproductos);
-    }
+
 
     public function preguntar($id){
         $productos = DB::table('productos')->get();
@@ -87,15 +69,12 @@ class ClienteController extends Controller
         $id = $id;
         $valores=$request->all();
         $usuario = \Session::get('usuario');
+      foreach($usuario as $user){
+        $iduser=$user->id;
+      }
        
-        if(empty($valores['categoria'])){
-            // $id = DB::table('usuarios')
-            // ->where('usuarios.nombre', '=', $usuario['nombre'])
-            // ->where('usuarios.correo', '=', $usuario['correo'])
-            // ->where('usuarios.password', '=', $usuario['password'])
-            // ->get();
             $crear=DB::insert('insert into preguntas(pregunta,productos_id,usuarios_id)
-            values(?,?,?)',[$valores['pregunta'],$id,$usuario['id']]);
+            values(?,?,?)',[$valores['pregunta'],$id,$iduser]);
 
             //----volvemos a redirigir a la pagina pero tenemos que mandar los datos----//
             $usuarios = DB::table('usuarios')
@@ -111,7 +90,6 @@ class ClienteController extends Controller
 
             $mensaje='Pregunta realizada';
             return view("clientes.pregunta",compact('id','mensaje','usuarios','productos'));
-        }
     }
 }
 

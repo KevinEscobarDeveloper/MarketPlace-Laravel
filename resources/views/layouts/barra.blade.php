@@ -72,7 +72,7 @@
         >
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Productos</span>
         </a>
-        <a href="/principal-categoria" class="list-group-item list-group-item-action py-2 ripple active">
+        <a href="/principal-categoria" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-chart-area fa-fw me-3"></i><span>Categorías</span>
         </a>
       </div>
