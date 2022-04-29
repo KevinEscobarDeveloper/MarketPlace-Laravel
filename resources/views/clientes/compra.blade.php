@@ -19,47 +19,47 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well-sm">
-                            <form action="/realizarpregunta/{{$id}}" class="form-horizontal" method="post">
-                                    <legend class="text-center header">Realizar pergunta</legend>
+                            <form action="/tipocompra/{{$id}}" class="form-horizontal" method="post">
+                                    <legend class="text-center header">Compra</legend>
                                     <label >Nombre del producto</label>
                                     @csrf
                                     {{-- El foreach sirve para poder leer los datos enviados --}}
-                                    
+                                    @foreach ($usuarios as $usuario)
+                                    @endforeach
                                     @foreach ($productos as $producto)
                                     @endforeach
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="id" type="text" value={{$producto->nombre}} class="form-control" readonly>
+                                            <input id="fname" name="producto" type="text" value={{$producto->nombre}} class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label >Precio</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->precio}}" class="form-control" readonly>
+                                            <input id="fname" name="precio" type="text" value="{{$producto->precio}}" class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label >Vendedor</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->usernombre}} {{$producto->apellido_paterno}} {{$producto->apellido_materno}}" class="form-control" readonly>
+                                            <input id="fname" name="vendedor" type="text" value="{{$usuario->usernombre}} {{$usuario->apellido_paterno}} {{$usuario->apellido_materno}}" class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Realiza tu pregunta</label>
+                                        <label >Tipo de compra</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                                <textarea class="form-control" id="pregunta" name="pregunta" rows="3"></textarea>  
+                                            <select class="form-select" name="tipocompra" style="width:auto">
+                                                <option>Compra en linea</option>
+                                                <option>Por banco</option>
+                                              </select>  
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary btn-lg">preguntar</button>
-                                       
-                                @if (!empty($mensaje))
-                                    <label >{{$mensaje}}</label>
-                                    @endif
+                                    <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
                             </form>
                         </div>
                     </div>
@@ -67,3 +67,5 @@
             </div>
         </div>
       </main>
+</body>
+</html>

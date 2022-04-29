@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\File;
 use App\Models\Usuario;
+use App\Models\Producto;
+use App\Models\Venta;
+use App\Models\Pregunta;
 
 class ClienteController extends Controller
 {
@@ -53,16 +56,17 @@ class ClienteController extends Controller
 
 
     public function preguntar($id){
-        $productos = DB::table('productos')->get();
+        //$productos = DB::table('productos')->get();
         $id = $id;
-        $usuarios = DB::table('usuarios')
+        $productos = DB::table('usuarios')
         -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
         ->select('usuarios.nombre as usernombre','productos.nombre',
         'usuarios.apellido_paterno','usuarios.apellido_materno',
         'productos.precio','productos.imagen','productos.consecionado')
-        -> where ('usuarios.id','=',$id)
+        -> where ('productos.id','=',$id)
         ->get();
-        return view("clientes.pregunta",compact('id','productos','usuarios'));
+        //dd($productos);
+        return view("clientes.pregunta",compact('id','productos'));
     }
 
     public function realizarpregunta(Request $request,$id){
@@ -77,19 +81,152 @@ class ClienteController extends Controller
             values(?,?,?)',[$valores['pregunta'],$id,$iduser]);
 
             //----volvemos a redirigir a la pagina pero tenemos que mandar los datos----//
-            $usuarios = DB::table('usuarios')
+            $productos = DB::table('usuarios')
             -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
             ->select('usuarios.nombre as usernombre','productos.nombre',
             'usuarios.apellido_paterno','usuarios.apellido_materno',
             'productos.precio','productos.imagen','productos.consecionado')
-            -> where ('usuarios.id','=',$id)
+            -> where ('productos.id','=',$id)
             ->get();
 
-            $productos = DB::table('productos')->get();
+            //$productos = DB::table('productos')->get();
             //--------------//
-
+           
             $mensaje='Pregunta realizada';
-            return view("clientes.pregunta",compact('id','mensaje','usuarios','productos'));
+            return view("clientes.pregunta",compact('id','mensaje','productos'));
+    }
+
+    public function comprar($id){
+        $id = $id;
+       
+            $usuarios = Usuario::select('usuarios.nombre as usernombre','productos.nombre',
+            'usuarios.apellido_paterno','usuarios.apellido_materno',
+            'productos.precio','productos.imagen','productos.consecionado')
+            -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
+            -> where ('productos.id','=',$id)
+            ->get();
+
+            //var_dump($usuarios);
+            $productos = Producto::where('id',$id)->get();
+
+            
+            return view("clientes.compra",compact('id','usuarios','productos'));
+    }
+
+    public function tipocompra(Request $request,$id){
+        $id = $id;
+        $valores=$request->all();
+
+        $usuarios = Usuario::select('usuarios.nombre as usernombre','productos.nombre',
+            'usuarios.apellido_paterno','usuarios.apellido_materno',
+            'productos.precio','productos.imagen','productos.consecionado')
+            -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
+            -> where ('productos.id','=',$id)
+            ->get();
+
+            //var_dump($usuarios);
+            $productos = Producto::where('id',$id)->get();
+
+        if ($valores['tipocompra']=='Compra en linea'){
+            $usuario = \Session::get('usuario');
+            foreach($usuario as $user){
+            $iduser = $user->id;
+            }
+            $correo = Usuario::where('id',$iduser)->value('correo');
+            $venta = new Venta;
+            $venta->correo = $correo;
+            $venta->monto = $valores['precio'];
+            $venta->tipo = 'Transacción';
+            $venta->productos_id = $id;
+            $venta->save();
+            return view("clientes.tipocompra",compact('id','usuarios','productos','valores'));
+            
+        }
+        if ($valores['tipocompra']=='Por banco'){
+            if(!empty($valores['comprobante'])){
+                $file = $request->file('comprobante'); 
+                $originalname = $file->getClientOriginalName();
+                $file->storeAs('public/cliente',$originalname);
+                $valores['comprobante'] = '/storage/evidencias/'.$originalname;
+                $mensaje='Compra exitosa';
+                
+                $usuario = \Session::get('usuario');
+                foreach($usuario as $user){
+                $iduser = $user->id;
+                }
+
+                $correo = Usuario::where('id',$iduser)->value('correo');
+                $venta = new Venta;
+                $venta->correo = $correo;
+                $venta->monto = $valores['precio'];
+                $venta->tipo = 'Deposito';
+                $venta->productos_id = $id;
+                $venta->evidencia = $valores['comprobante'];
+                $venta->save();
+                return view("clientes.tipocompra",compact('id','usuarios','productos','valores','mensaje'));
+                }
+            
+            
+            if(empty($valores['comprobante'])){
+                $mensaje='Agregue el comprobante';
+                return view("clientes.tipocompra",compact('id','usuarios','productos','mensaje','valores'));
+            }  
+        }        
+    }
+    public function mispreguntas(){
+            $usuario = \Session::get('usuario');
+            foreach($usuario as $user){
+            $iduser = $user->id;
+            }
+            $preguntas = Pregunta::select('preguntas.id as idp','productos.nombre as pnombre','preguntas.respuesta',
+            'usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+            'productos.precio','productos.imagen')
+            -> join('productos','preguntas.productos_id', '=', 'productos.id')
+            -> join('usuarios','preguntas.usuarios_id', '=', 'usuarios.id')
+            -> where ('productos.usuarios_id','=',$iduser)
+            ->get();
+  
+            return view("clientes.verpreguntas",compact('preguntas'));
+    }
+
+    public function verpregunta($id){
+        $id=$id;
+
+        $usuario = \Session::get('usuario');
+        foreach($usuario as $user){
+        $iduser = $user->id;
+        }
+        $preguntas = Pregunta::select('preguntas.id as idp','preguntas.pregunta','preguntas.respuesta','productos.nombre as pnombre',
+        'usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+        'productos.precio','productos.imagen')
+        -> join('productos','preguntas.productos_id', '=', 'productos.id')
+        -> join('usuarios','preguntas.usuarios_id', '=', 'usuarios.id')
+        -> where ('preguntas.id','=',$id)
+        ->get();
+
+        ($preguntas);
+        return view("clientes.responder",compact('preguntas','id'));
+    }
+
+    public function respuesta(Request $request,$id){
+        $id=$id;
+        $valores=$request->all();
+        $pregunta = Pregunta::find($id);
+        $pregunta->respuesta = $valores['respuesta'];
+
+        $pregunta->save();
+
+        $preguntas = Pregunta::select('preguntas.id as idp','preguntas.pregunta','preguntas.respuesta','productos.nombre as pnombre',
+        'usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+        'productos.precio','productos.imagen')
+        -> join('productos','preguntas.productos_id', '=', 'productos.id')
+        -> join('usuarios','preguntas.usuarios_id', '=', 'usuarios.id')
+        -> where ('preguntas.id','=',$id)
+        ->get();
+
+        $mensaje='respuesta enviada';
+
+        return view("clientes.responder",compact('preguntas','id','mensaje'));
     }
 }
 

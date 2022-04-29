@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('preguntas', function (Blueprint $table) {
+        Schema::create('transacciones', function (Blueprint $table) {
             $table->id();
-            $table->string("pregunta",150);
-            $table->string("respuesta",150)->nullable();
+            $table->tinyInteger("calificacion");
 
+            $table->foreignId('ventas_id')->nullable()
+            ->constrained('ventas')->onUpdate('cascade') ->onDelete('cascade');
 
-            $table->foreignId('productos_id')
-            ->constrained('productos')->onUpdate('cascade') ->onDelete('cascade');
-
-            $table->foreignId('usuarios_id')
+            $table->foreignId('usuarios_id')->nullable()
             ->constrained('usuarios')->onUpdate('cascade') ->onDelete('cascade');
-           
+
         });
     }
 
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preguntas');
+        Schema::dropIfExists('transaccions');
     }
 };

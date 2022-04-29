@@ -19,14 +19,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well-sm">
-                            <form action="/realizarpregunta/{{$id}}" class="form-horizontal" method="post">
-                                    <legend class="text-center header">Realizar pergunta</legend>
-                                    <label >Nombre del producto</label>
-                                    @csrf
+                            
                                     {{-- El foreach sirve para poder leer los datos enviados --}}
-                                    
+                                    @foreach ($usuarios as $usuario)
+                                    @endforeach
                                     @foreach ($productos as $producto)
                                     @endforeach
+                                    @if ($valores['tipocompra']=='Compra en linea')
+                                    <legend class="text-center header">Usted a comprado el producto</legend>
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></i></span>
                                         <div class="col-md-8">
@@ -40,30 +40,51 @@
                                             <input id="fname" name="nombre" type="text" value="{{$producto->precio}}" class="form-control" readonly>
                                         </div>
                                     </div>
+                                    <td><a href="/comprar/{{$producto->id}}" class="btn btn-success">Volver</a></td>
+                                    @endif
+                                    @if ($valores['tipocompra']=='Por banco')
+                                    <form action="/tipocompra/{{$id}}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                        <fieldset>
+                                        <legend class="text-center header">Compra status</legend>
+                                        @csrf
                                     <div class="form-group">
-                                        <label >Vendedor</label>
-                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                        <span class="col-md-1 col-md-offset-2 text-center"></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->usernombre}} {{$producto->apellido_paterno}} {{$producto->apellido_materno}}" class="form-control" readonly>
+                                            <input id="fname" name="id" type="text" value={{$producto->nombre}} class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Realiza tu pregunta</label>
+                                        <label >Precio</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                                <textarea class="form-control" id="pregunta" name="pregunta" rows="3"></textarea>  
+                                            <input id="fname" name="precio" type="text" value="{{$producto->precio}}" class="form-control" readonly>
                                         </div>
                                     </div>
-
-                                    <button type="submit" class="btn btn-primary btn-lg">preguntar</button>
-                                       
-                                @if (!empty($mensaje))
+                                    <div class="form-group">
+                                        <label >Tipo de pago</label>
+                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                        <div class="col-md-8">
+                                            <input id="fname" name="tipocompra" type="text" value="Por banco" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Agregue su comprobante</label>
+                                            <input type="file" class="form-control-file" id="comprobante" name="comprobante">
+                                          </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
+                                        </fieldset>
+                                    @if (!empty($mensaje))
                                     <label >{{$mensaje}}</label>
                                     @endif
-                            </form>
+                                </form>
+                                    @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
       </main>
+</body>
+</html>

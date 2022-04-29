@@ -39,4 +39,8 @@ class Producto extends Model
         return $this->hasMany(Pregunta::class, 'productos_id','id');
     }
 
+    public function ventas(){
+        return $this->hasMany(Venta::class, 'ventas_id','id');
+    }
+
 }

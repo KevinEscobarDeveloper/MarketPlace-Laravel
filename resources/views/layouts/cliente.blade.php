@@ -26,7 +26,7 @@
   <!-- Left links -->
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-      <a class="nav-link"  href="/registrar-cliente">Registrarse</a>
+      
   </ul>
   <!-- Left links -->
 </div>
@@ -76,6 +76,9 @@
         >
         <a href="#" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis compras</span></a
+        >
+        <a href="/mispreguntas" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Preguntas</span></a
         >
       </div>
     </div>

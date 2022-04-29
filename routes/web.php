@@ -91,6 +91,12 @@ Route::get('principal-cliente',[ClienteController::class, 'principalcliente']);
 Route::get('categoria/{id}',[ClienteController::class, 'listarcategorias']);
 Route::get('pregunta/{id}',[ClienteController::class, 'preguntar']);
 Route::post('realizarpregunta/{id}',[ClienteController::class, 'realizarpregunta']);
+Route::get('comprar/{id}',[ClienteController::class, 'comprar']);
+Route::post('tipocompra/{id}',[ClienteController::class, 'tipocompra']);
+//VENDEDOR
+Route::get('mispreguntas',[ClienteController::class, 'mispreguntas']);
+Route::get('verpregunta/{id}',[ClienteController::class, 'verpregunta']);
+Route::put('respuesta/{id}',[ClienteController::class, 'respuesta']);
 
 
 //Encargado

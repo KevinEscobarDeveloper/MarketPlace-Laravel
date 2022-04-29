@@ -46,6 +46,7 @@
       <th>Existencia</th>
       <th>Pendiente</th>
       <th>Preguntar</th>
+      <th>Comprar</th>
     </tr>
   </thead>
   <tbody>
@@ -61,6 +62,8 @@
       <td>{{$producto->existencia}}</td>
       <td>{{$producto->pendientes}}</td>
       <td><a href="/pregunta/{{ $producto->id }}" class="btn btn-primary">Realizar pregunta</a></td>
+      <td><a href="/comprar/{{$producto->id}}" class="btn btn-success">Comprar</a></td>
+      
     </tr>
     @endforeach
   </tbody>
@@ -83,6 +86,7 @@
       <th>Existencia</th>
       <th>Pendiente</th>
       <th>Preguntar</th>
+      <th>Comprar</th>
     </tr>
   </thead>
   <tbody>
@@ -97,6 +101,7 @@
       <td>{{$cproducto->existencia}}</td>
       <td>{{$cproducto->pendientes}}</td>
       <td><a href="/pregunta/{{ $cproducto->id }}" class="btn btn-primary">Realizar pregunta</a></td>
+      <td><a href="/comprar/{{$cproducto->id}}" class="btn btn-success">Comprar</a></td>
     </tr>
     @endforeach
   </tbody>

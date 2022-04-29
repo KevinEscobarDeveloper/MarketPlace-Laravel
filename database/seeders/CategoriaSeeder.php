@@ -16,12 +16,28 @@ class CategoriaSeeder extends Seeder
     {
         
         $datos = [ 
-            'id' => 1,
+            ['id' => 1,
             'nombre' => 'Herramientas',
             'descripción' => 'Herramientas libres y/o utilidades ',
             // 'imagen' => public_path('storage/categoria/herramientas.png'),
             'imagen' => ('/storage/categoria/herramientas.png'),
-            'activa' => 1
+            'activa' => 1],
+            ['id' => 2,
+            'nombre' => 'Ropa',
+            'descripción' => 'Ropa con nuevos estilos novedosos,de colores llamativos y de hermosos acabados.',
+            'imagen' => ('/storage/categoria/ropa.png'),
+            'activa' => 1],
+            ['id' => 3,
+            'nombre' => 'Alimentos',
+            'descripción' => 'Articulos de alimentos como comidas, bebidas y conservas.',
+            'imagen' => ('/storage/categoria/supermercado.png'),
+            'activa' => 1],
+            ['id' => 4,
+            'nombre' => 'Muebles',
+            'descripción' => 'Diferentes tipos de mobiliarios escritorios y mesas para oficina.',
+            'imagen' => ('/storage/categoria/muebles.png'),
+            'activa' => 1]
+            
         ];
         \DB::table('categorias')->insert($datos);
     }

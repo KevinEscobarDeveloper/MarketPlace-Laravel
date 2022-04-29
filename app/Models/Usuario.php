@@ -10,7 +10,7 @@ class Usuario extends Model
     use HasFactory;
 
     protected $table = 'usuarios';
-    // public $timestamps = false;
+    public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
         'nombre',
@@ -30,6 +30,9 @@ class Usuario extends Model
 
     public function preguntas(){
         return $this->hasMany(Pregunta::class, 'usuarios_id','id');
+    }
+    public function transacciones(){
+        return $this->hasMany(Transaccion::class, 'transaccion_id','id');
     }
 }
 

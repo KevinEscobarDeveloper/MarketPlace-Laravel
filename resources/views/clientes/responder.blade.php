@@ -19,44 +19,54 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well-sm">
-                            <form action="/realizarpregunta/{{$id}}" class="form-horizontal" method="post">
-                                    <legend class="text-center header">Realizar pergunta</legend>
-                                    <label >Nombre del producto</label>
+                            <form action="/respuesta/{{$id}}" class="form-horizontal" method="post">
+                                @method('put')
+                                    <legend class="text-center header">Responder pregunta</legend>
+                                    <label >Producto</label>
                                     @csrf
                                     {{-- El foreach sirve para poder leer los datos enviados --}}
                                     
-                                    @foreach ($productos as $producto)
+                                    @foreach ($preguntas as $pregunta)
                                     @endforeach
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="id" type="text" value={{$producto->nombre}} class="form-control" readonly>
+                                            <input id="fname" name="producto" type="text" value={{$pregunta->pnombre}} class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Precio</label>
+                                        <label >Cliente</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->precio}}" class="form-control" readonly>
+                                            <input id="fname" name="cliente" type="text" value="{{$pregunta->nombre}} {{$pregunta->apellido_paterno}} {{$pregunta->apellido_materno}}" class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Vendedor</label>
+                                        <label >Pregunta</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->usernombre}} {{$producto->apellido_paterno}} {{$producto->apellido_materno}}" class="form-control" readonly>
+                                            <textarea class="form-control" id="pregunta" name="pregunta" rows="3" disabled>{{$pregunta->pregunta}}</textarea>  
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Realiza tu pregunta</label>
+                                        @if (empty($pregunta->respuesta))
+                                        <label >Responder</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                                <textarea class="form-control" id="pregunta" name="pregunta" rows="3"></textarea>  
+                                                <textarea class="form-control" id="respuesta" name="respuesta" rows="3"></textarea>  
                                         </div>
+                                        <button type="submit" class="btn btn-primary btn-lg">Responder</button>
+                                        @endif
+                                        @if (!empty($pregunta->respuesta))
+                                        <label >Responder</label>
+                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                        <div class="col-md-8">
+                                                <textarea class="form-control" id="respuesta" name="respuesta" rows="3" disabled></textarea>  
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-lg" disabled>Responder</button>
+                                        @endif
                                     </div>
-
-                                    <button type="submit" class="btn btn-primary btn-lg">preguntar</button>
-                                       
+   
                                 @if (!empty($mensaje))
                                     <label >{{$mensaje}}</label>
                                     @endif
