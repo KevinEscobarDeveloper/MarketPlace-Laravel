@@ -19,7 +19,7 @@ class ProductoController extends Controller
         -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
         -> join('categorias','categoria_productos.categoria_id', '=', 'categorias.id')
         ->select('categorias.nombre as catnombre','productos.id','productos.nombre','productos.descripción',
-        'productos.precio','productos.imagen','productos.consecionado','productos.motivo',
+        'productos.precio','productos.imagen','productos.consignar','productos.motivo',
         'productos.existencia','productos.pendientes')
         ->get();
         return view("clientes.principal")->with('productos',$productos);

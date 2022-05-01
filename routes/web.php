@@ -64,6 +64,11 @@ Route::get('crear-usuario', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
+Route::get('proponer-producto', function() {
+    return view('clientes.venderp');
+    //buscara el archivo 'tablero' dentro de resoureces/views
+});
+
 
 
 //valida que rol es el usuario 
@@ -85,7 +90,7 @@ Route::get('productosdes',[ProductoController::class, 'productosdesconsignar']);
 //crear usuario de tipo cliente (registro de anonimo)
 Route::post('crearcliente',[ClienteController::class,'crear'])->middleware('arreglo');
 
-//Cliente l
+//Cliente 
 Route::get('principal-cliente',[ClienteController::class, 'principalcliente']);
 //Listar productos por categorias para los clientes
 Route::get('categoria/{id}',[ClienteController::class, 'listarcategorias']);
@@ -97,6 +102,12 @@ Route::post('tipocompra/{id}',[ClienteController::class, 'tipocompra']);
 Route::get('mispreguntas',[ClienteController::class, 'mispreguntas']);
 Route::get('verpregunta/{id}',[ClienteController::class, 'verpregunta']);
 Route::put('respuesta/{id}',[ClienteController::class, 'respuesta']);
+Route::get('misproductos',[ClienteController::class, 'misproductos']);
+Route::post('propuesta',[ClienteController::class, 'propuesta']);
+Route::get('actualizarp/{id}',[ClienteController::class, 'actualizarp']);
+Route::put('updateproducto/{id}',[ClienteController::class, 'updateproducto']);
+Route::get('miscompras',[ClienteController::class, 'miscompras']);
+
 
 
 //Encargado

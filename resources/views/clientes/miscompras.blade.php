@@ -13,22 +13,7 @@
 </head>
 
 <body>
-            @if(!empty($categorias))
-            <main style="margin-top: 58px;">
-              <div class="container pt-4">
-            @foreach ($categorias as $categoria)
-    <div class="recuadro" id="uno">
-        <div class="card" style="width: 14rem;">
-            <img class="card-img-top" width ="50px" src={{$categoria->imagen}}>
-            <div class="card-body">
-            <h5 class="card-title">{{ $categoria->nombre }}</h5>
-            <p class="card-text">{{ $categoria->descripción }}</p>
-            <a href="/categoria/{{ $categoria->id }}" class="btn btn-primary">Ir a la categoria</a>
-            </div>
-        </div>
-    </div>
-    @endforeach
-    @endif
+
     @if(!empty($productos))
     <main style="margin-top: 58px;">
         <div class="container pt-4">
@@ -70,45 +55,7 @@
 </table>
 </div>
     @endif
-    @if(!empty($cproductos))
-    <main style="margin-top: 58px;">
-        <div class="container pt-4">
-    <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
-  width="100%">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Descripción</th>
-      <th>Precio</th>
-      <th>Imagen</th>
-      <th>Existencia</th>
-      <th>Pendiente</th>
-      <th>Preguntar</th>
-      <th>Comprar</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach ($cproductos as $cproducto)
-    @php
-        $valor=$cproducto->consignar  
-      @endphp
-      @if ($valor=='1')
-    <tr>
-      <td>{{$cproducto->nombre}}</td>
-      <td>{{$cproducto->descripción}}</td>
-      <td>{{$cproducto->precio}}</td>
-      <td><img class="card-img-top" width ="50px" src={{$cproducto->imagen}}></td>
-      <td>{{$cproducto->existencia}}</td>
-      <td>{{$cproducto->pendientes}}</td>
-      <td><a href="/pregunta/{{ $cproducto->id }}" class="btn btn-primary">Realizar pregunta</a></td>
-      <td><a href="/comprar/{{$cproducto->id}}" class="btn btn-success">Comprar</a></td>
-    </tr>
-    @endif
-    @endforeach
-  </tbody>
-</table>
-</div>
-    @endif
+
       
     
 </body>

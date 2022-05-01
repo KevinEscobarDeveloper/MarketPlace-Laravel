@@ -19,44 +19,54 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well-sm">
-                            <form action="/realizarpregunta/{{$id}}" class="form-horizontal" method="post">
-                                    <legend class="text-center header">Realizar pregunta</legend>
-                                    <label >Nombre del producto</label>
+                            	
+                            <form action="/propuesta" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                <fieldset>
+                                    <legend class="text-center header">Agregue su propuesta</legend>
                                     @csrf
-                                    {{-- El foreach sirve para poder leer los datos enviados --}}
+                                    <div class="form-group">
+                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                        <div class="col-md-8">
+                                            <label >Nombre del producto</label>
+                                            <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                        <div class="col-md-8">
+                                            <label >Descripción</label>
+                                            <input id="descripcion" name="descripcion" type="text" placeholder="Descripción" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                        <div class="col-md-8">
+                                            <label >Precio</label>
+                                            <input id="precio" name="precio" type="number" placeholder="Precio" class="form-control" min="0">
+                                        </div>
+                                    </div>
                                     
-                                    @foreach ($productos as $producto)
-                                    @endforeach
                                     <div class="form-group">
-                                        <span class="col-md-1 col-md-offset-2 text-center"></i></span>
-                                        <div class="col-md-8">
-                                            <input id="fname" name="id" type="text" value={{$producto->nombre}} class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label >Precio</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->precio}}" class="form-control" readonly>
+                                            <label >Existencia</label>
+                                            <input id="existencia" name="existencia" type="number" placeholder="existencia" class="form-control" min="0">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Vendedor</label>
-                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
-                                        <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->usernombre}} {{$producto->apellido_paterno}} {{$producto->apellido_materno}}" class="form-control" readonly>
-                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Agregue su imagen</label>
+                                            <input type="file" class="form-control-file" id="imagen[]" name="imagen[]" multiple
+                                            accept="image/*">
+                                          </div>
                                     </div>
+            
                                     <div class="form-group">
-                                        <label >Realiza tu pregunta</label>
-                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
-                                        <div class="col-md-8">
-                                                <textarea class="form-control" id="pregunta" name="pregunta" rows="3"></textarea>  
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
                                         </div>
                                     </div>
-
-                                    <button type="submit" class="btn btn-primary btn-lg">preguntar</button>
-                                       
+                                </fieldset>
                                 @if (!empty($mensaje))
                                     <label >{{$mensaje}}</label>
                                     @endif
@@ -67,3 +77,9 @@
             </div>
         </div>
       </main>
+    
+</body>
+
+</body>
+</html>
+@endsection

@@ -228,5 +228,99 @@ class ClienteController extends Controller
 
         return view("clientes.responder",compact('preguntas','id','mensaje'));
     }
+
+    public function misproductos(){
+
+        $usuario = \Session::get('usuario');
+        foreach($usuario as $user){
+        $iduser = $user->id;
+        }
+
+        $productos = Producto::select('productos.nombre','productos.id as proid','productos.consignar','productos.existencia'
+        ,'productos.pendientes','productos.precio','productos.motivo')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        -> where ('productos.usuarios_id','=',$iduser)
+        ->get();
+
+        $mensaje='respuesta enviada';
+
+        return view("clientes.misproductos",compact('productos'));
+    }
+
+    public function propuesta(Request $request){
+        $valores=$request->all();
+        $fecha = date('y/m/d');
+        $urlimagenes = [];
+
+        //dd($valores);
+        $usuario = \Session::get('usuario');
+        foreach($usuario as $user){
+        $iduser = $user->id;
+        }
+        if($request->hasFile('imagen')==false){
+            $mensaje='Tiene que añadir imagenes';
+            return view("clientes.venderp",compact('mensaje'));
+        }
+
+        if($request->hasFile('imagen')){
+            $imagenes = $request->file('imagen');
+            foreach($imagenes as $imagen){
+                $nombre = time().'_'.$imagen->getClientOriginalName();
+                $ruta = $file->storeAs('public/productos');
+                $imagen->move($ruta,$nombre);
+                $urlimagenes[]['url'] = $nombre;
+
+                // $originalname = $file->getClientOriginalName();
+                // $file->storeAs('public/cliente',$originalname);
+                // $valores['comprobante'] = '/storage/evidencias/'.$originalname;
+            }
+            
+            return $urlimagenes;
+        // $producto = new Producto;
+        // $producto->nombre=$valores->nombre;
+        // $producto->descripción=$valores->descripcion;
+        // $producto->precio=$valores->precio;
+        // $producto->existencia=$valores->existencia;
+        // $producto->usuarios_id=$iduser;
+        // $producto->fecha=$fecha;
+        // $producto->save();
+        }
+
+        $mensaje='respuesta enviada';
+        //return view("clientes.misproductos",compact('productos'));
+    }
+
+    public function actualizarp($id){
+        $id = $id;
+        $usuario = \Session::get('usuario');
+        foreach($usuario as $user){
+        $iduser = $user->id;
+        }
+
+        $productos = Producto::where('id', $id)->get(['nombre','precio','descripción']);
+        return view("clientes.actualizarp",compact('productos','id'));
+    }
+
+    public function updateproducto(Request $request,$id){
+        $id = $id;
+        $valores=$request->all();
+        Producto::where('id',$id)->update(['descripción'=>$valores['descripcion'],
+        'precio'=>$valores['precio']]);
+
+        $productos = Producto::where('id', $id)->get(['nombre','precio','descripción']);
+        $mensaje='Actualización exitosa';
+        return view("clientes.actualizarp",compact('productos','id','mensaje'));
+    }
+
+    public function miscompras(){
+        $id = $id;
+        $valores=$request->all();
+        Producto::where('id',$id)->update(['descripción'=>$valores['descripcion'],
+        'precio'=>$valores['precio']]);
+
+        $productos = Producto::where('id', $id)->get(['nombre','precio','descripción']);
+        $mensaje='Actualización exitosa';
+        //return view("clientes.actualizarp",compact('productos','id','mensaje'));
+    }
 }
 

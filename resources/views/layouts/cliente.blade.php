@@ -26,7 +26,7 @@
   <!-- Left links -->
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-      
+      <a class="nav-link"  href="/proponer-producto">Vender producto</a>
   </ul>
   <!-- Left links -->
 </div>
@@ -79,6 +79,9 @@
         >
         <a href="/mispreguntas" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-chart-line fa-fw me-3"></i><span>Preguntas</span></a
+        >
+        <a href="/misproductos" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis productos</span></a
         >
       </div>
     </div>

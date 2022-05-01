@@ -19,44 +19,40 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well-sm">
-                            <form action="/realizarpregunta/{{$id}}" class="form-horizontal" method="post">
-                                    <legend class="text-center header">Realizar pregunta</legend>
-                                    <label >Nombre del producto</label>
+                            <form action="/updateproducto/{{$id}}" class="form-horizontal" method="post" >
+                                @method('put')
+                                    <legend class="text-center header">Editar producto</legend>
+                                    <label >Producto</label>
                                     @csrf
                                     {{-- El foreach sirve para poder leer los datos enviados --}}
-                                    
                                     @foreach ($productos as $producto)
                                     @endforeach
                                     <div class="form-group">
                                         <span class="col-md-1 col-md-offset-2 text-center"></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="id" type="text" value={{$producto->nombre}} class="form-control" readonly>
+                                            <input id="nombre" name="nombre" type="text" value="{{$producto->nombre}}" class="form-control" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label >Precio</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->precio}}" class="form-control" readonly>
+                                            <input id="precio" name="precio" type="number" value="{{$producto->precio}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label >Vendedor</label>
+                                        <label >Descripción</label>
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
                                         <div class="col-md-8">
-                                            <input id="fname" name="nombre" type="text" value="{{$producto->usernombre}} {{$producto->apellido_paterno}} {{$producto->apellido_materno}}" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label >Realiza tu pregunta</label>
-                                        <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
-                                        <div class="col-md-8">
-                                                <textarea class="form-control" id="pregunta" name="pregunta" rows="3"></textarea>  
+                                            <input id="descripcion" name="descripcion" type="text" value="{{ $producto->descripción }}" class="form-control">
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary btn-lg">preguntar</button>
-                                       
+                                    <div class="form-group">
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-primary btn-lg">Actualizar</button>
+                                        </div>
+                                    </div>
                                 @if (!empty($mensaje))
                                     <label >{{$mensaje}}</label>
                                     @endif
@@ -67,3 +63,9 @@
             </div>
         </div>
       </main>
+    
+</body>
+
+</body>
+</html>
+@endsection
