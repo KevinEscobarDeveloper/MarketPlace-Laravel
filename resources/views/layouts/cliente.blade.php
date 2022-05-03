@@ -74,7 +74,7 @@
         <a href="#" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-lock fa-fw me-3"></i><span>Ventas</span></a
         >
-        <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+        <a href="/miscompras" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis compras</span></a
         >
         <a href="/mispreguntas" class="list-group-item list-group-item-action py-2 ripple"

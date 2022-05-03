@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('transacciones', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger("calificacion");
+            $table->tinyInteger("calificacion")->nullable();
 
             $table->foreignId('ventas_id')->nullable()
             ->constrained('ventas')->onUpdate('cascade') ->onDelete('cascade');

@@ -107,6 +107,7 @@ Route::post('propuesta',[ClienteController::class, 'propuesta']);
 Route::get('actualizarp/{id}',[ClienteController::class, 'actualizarp']);
 Route::put('updateproducto/{id}',[ClienteController::class, 'updateproducto']);
 Route::get('miscompras',[ClienteController::class, 'miscompras']);
+Route::get('misventas',[ClienteController::class, 'misventas']);
 
 
 

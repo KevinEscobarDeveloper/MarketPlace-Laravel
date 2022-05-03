@@ -9,15 +9,14 @@ use App\Models\Usuario;
 use App\Models\Producto;
 use App\Models\Venta;
 use App\Models\Pregunta;
+use App\Models\Transaccion;
 
 class ClienteController extends Controller
 {
     public function crear(Request $request){
         //se guarda lo que viene en el formulario
         $valores=$request->all();
-        //$productos = \Session::get('productos');
-        //array_push($productos, $valores);
-        //\Session::put('productos',$productos);
+
     if(!empty($valores['imagen'])){
         $file = $request->file('imagen'); 
         $originalname = $file->getClientOriginalName();
@@ -139,6 +138,16 @@ class ClienteController extends Controller
             $venta->tipo = 'Transacción';
             $venta->productos_id = $id;
             $venta->save();
+            //----------------------------------------//
+            $transaccion = new Transaccion;
+            $transaccion->ventas_id= $venta->id;
+            $transaccion->usuarios_id= $iduser;
+            $transaccion->save();
+
+            //-----------//
+            $producto = Producto::find($id);
+            $producto->decrement('existencia',1);
+
             return view("clientes.tipocompra",compact('id','usuarios','productos','valores'));
             
         }
@@ -163,6 +172,14 @@ class ClienteController extends Controller
                 $venta->productos_id = $id;
                 $venta->evidencia = $valores['comprobante'];
                 $venta->save();
+                //-------------------------------------//
+                $transaccion = new Transaccion;
+                $transaccion->ventas_id= $venta->id;
+                $transaccion->usuarios_id= $iduser;
+                $transaccion->save();
+                 //-----------//
+                $producto = Producto::find($id);
+                $producto->decrement('existencia',1);
                 return view("clientes.tipocompra",compact('id','usuarios','productos','valores','mensaje'));
                 }
             
@@ -313,14 +330,35 @@ class ClienteController extends Controller
     }
 
     public function miscompras(){
-        $id = $id;
-        $valores=$request->all();
-        Producto::where('id',$id)->update(['descripción'=>$valores['descripcion'],
-        'precio'=>$valores['precio']]);
+        $usuario = \Session::get('usuario');
+        foreach($usuario as $user){
+        $iduser = $user->id;
+        }
+        //-----------------//
+        $productos = Producto::select('productos.nombre','productos.precio','productos.descripción')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where ('transacciones.usuarios_id','=',$iduser)
+        ->get();
 
-        $productos = Producto::where('id', $id)->get(['nombre','precio','descripción']);
-        $mensaje='Actualización exitosa';
-        //return view("clientes.actualizarp",compact('productos','id','mensaje'));
+        //dd($productos);
+        return view("clientes.miscompras",compact('productos'));
+    }
+
+    public function misventas(){
+        $usuario = \Session::get('usuario');
+        foreach($usuario as $user){
+        $iduser = $user->id;
+        }
+        //-----------------//
+        $productos = Producto::select('productos.nombre','productos.precio','productos.descripción')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where ('productos.usuarios_id','=',$iduser)
+        ->get();
+
+        //dd($productos);
+        return view("clientes.miscompras",compact('productos'));
     }
 }
 

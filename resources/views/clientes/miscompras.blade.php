@@ -21,34 +21,17 @@
   width="100%">
   <thead>
     <tr>
-      <th>Categoria</th> 
       <th>Nombre</th>
       <th>Descripción</th>
       <th>Precio</th>
-      <th>Imagen</th>
-      <th>Existencia</th>
-      <th>Pendiente</th>
-      <th>Preguntar</th>
-      <th>Comprar</th>
     </tr>
   </thead>
   <tbody>
     @foreach ($productos as $producto)
     <tr>
-      @php
-        $valor=$producto->consignar  
-      @endphp
-      @if ($valor=='1')
-      <td>{{$producto->catnombre}}</td>
       <td>{{$producto->nombre}}</td>
       <td>{{$producto->descripción}}</td>
       <td>{{$producto->precio}}</td>
-      <td><img class="card-img-top" width ="50px" src={{$producto->imagen}}></td>
-      <td>{{$producto->existencia}}</td>
-      <td>{{$producto->pendientes}}</td>
-      <td><a href="/pregunta/{{ $producto->id }}" class="btn btn-primary">Realizar pregunta</a></td>
-      <td><a href="/comprar/{{$producto->id}}" class="btn btn-success">Comprar</a></td>
-      @endif
     </tr>
     @endforeach
   </tbody>
