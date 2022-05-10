@@ -15,7 +15,7 @@
 			<div class="user_card">
 				<div class="d-flex justify-content-center">
 					<div class="brand_logo_container">
-						<img src="https://pm1.narvii.com/7163/b26a66b8ecee29788bc3ed5a7ca2db1fea79f5d0r1-720-720v2_hq.jpg" class="brand_logo" alt="Logo">
+						<img src="https://i.pinimg.com/736x/28/f1/a9/28f1a972e13e4281b5273891ead173eb.jpg" class="brand_logo" alt="Logo">
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">

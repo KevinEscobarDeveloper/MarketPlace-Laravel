@@ -26,7 +26,7 @@
   <!-- Left links -->
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-      <a class="nav-link"  href="/proponer-producto">Vender producto</a>
+    
   </ul>
   <!-- Left links -->
 </div>
@@ -66,22 +66,12 @@
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 mt-4">
         <a href="/productos-cliente" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Productos</span>
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Validar compras</span>
         </a>
         <a href="/principal-cliente" class="list-group-item list-group-item-action py-2 ripple ">
           <i class="fas fa-chart-area fa-fw me-3"></i><span>Categorías</span>
         </a>
-        <a href="/misventas" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-lock fa-fw me-3"></i><span>Ventas</span></a
-        >
-        <a href="/miscompras" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis compras</span></a
-        >
-        <a href="/mispreguntas" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Preguntas</span></a
-        >
-        <a href="/misproductos" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Mis productos</span></a
+
         >
       </div>
     </div>

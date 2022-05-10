@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Venta;
+
 
 class UsuarioController extends Controller
 {
@@ -27,7 +29,7 @@ class UsuarioController extends Controller
     public function actualizarcontraseña(Request $request,$id){
     $valores=$request->all();
     DB::table('usuarios')->where('id', $id)->update(['password' =>$valores['contraseña1']]);  
-    return redirect("/usuarios")->with();
+    return redirect("/usuarios")->with($id);
     }
 
     public function editarpasword($id){
@@ -176,7 +178,7 @@ class UsuarioController extends Controller
         return view("supervisor.crearcat",compact('mensaje'));
     }
 
-    public function crearusuariosup(Request $request){
+    public function crearusuariosup(Request $request){  
         //se guarda lo que viene en el formulario
         $valores=$request->all();
     if(!empty($valores['imagen'])){
@@ -189,10 +191,10 @@ class UsuarioController extends Controller
     if(empty($valores['imagen'])){
         $valores['imagen']=null;
     }
-
-    $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password)
-     values(?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
-     $valores['correo'],$valores['imagen'],$valores['rol'],1,$valores['password']]);
+    $fecha = date('y/m/d');
+    $crear=DB::insert('insert into usuarios(nombre,apellido_paterno,apellido_materno,correo,imagen,rol,activo,password,fecha)
+     values(?,?,?,?,?,?,?,?,?)',[$valores['nombre'],$valores['apaterno'],$valores['amaterno'],
+     $valores['correo'],$valores['imagen'],$valores['rol'],1,$valores['password'],$fecha]);
      \Session::put('usuario',$valores);
      $categorias = DB::table('categorias')->get();
      $mensaje='Se añadio correctamente';
@@ -323,7 +325,28 @@ class UsuarioController extends Controller
         ['usuarios.id','=',$id]])
         ->count();
 
-        return view("supervisor.historial",compact('usuarios','productos','consignados'));
-        }
+    return view("supervisor.historial",compact('usuarios','productos','consignados'));
+    }
+    //----------CONTADOR------------//
+    public function principalcontador(){           
+        $ventas = Venta::select(['ventas.id','ventas.correo','ventas.monto',
+            'ventas.status', 'ventas.evidencia','ventas.tipo'])
+        ->get();
+
+        return view("contador.principal",compact('ventas'));
+    }
+
+    public function validarcompra(Request $request,$id){
+        $valores=$request->all();
+        Venta::where('id',$id)->update(['status'=>$valores['validacion']]);
+        
+        $ventas = Venta::select(['ventas.id','ventas.correo','ventas.monto',
+            'ventas.status', 'ventas.evidencia','ventas.tipo'])
+        ->get();
+        
+       
+        return view("contador.principal",compact('ventas'));
+    }
+
 
 }

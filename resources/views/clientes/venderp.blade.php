@@ -54,10 +54,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                    <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
+                                    <select class="form-select" name="categoria" style="width:auto">
+                                        @foreach ($categorias as $categoria)
+                                        <option>{{$categoria->nombre}}</option>
+                                      @endforeach
+                                    </select>
+                                    </div>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
                                         <div class="form-group">
                                             <label for="exampleFormControlFile1">Agregue su imagen</label>
                                             <input type="file" class="form-control-file" id="imagen[]" name="imagen[]" multiple
-                                            accept="image/*">
+                                            accept="image/*" required>
                                           </div>
                                     </div>
             

@@ -13,20 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('imagenes', function (Blueprint $table) {
             $table->id();
-            //$table->timestamps();
-            $table->string("correo",100)->nullable();
-            $table->float('monto',8,2);
-            $table->enum('status', ['Aceptado','Rechazado','Pendiente'])->default('Pendiente');
-            $table->enum('tipo', ['Transacción','Deposito'])->default('Transacción');
-            $table->string("evidencia",150)->nullable();
+            $table->string("nombre",150)->nullable();
 
             $table->foreignId('productos_id')->nullable()
             ->constrained('productos')->onUpdate('cascade') ->onDelete('cascade');
-           
-
-        }); 
+        });
     }
 
     /**
@@ -36,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('imagens');
     }
 };

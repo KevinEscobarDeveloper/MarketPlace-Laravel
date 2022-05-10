@@ -64,10 +64,7 @@ Route::get('crear-usuario', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
-Route::get('proponer-producto', function() {
-    return view('clientes.venderp');
-    //buscara el archivo 'tablero' dentro de resoureces/views
-});
+
 
 
 
@@ -103,12 +100,12 @@ Route::get('mispreguntas',[ClienteController::class, 'mispreguntas']);
 Route::get('verpregunta/{id}',[ClienteController::class, 'verpregunta']);
 Route::put('respuesta/{id}',[ClienteController::class, 'respuesta']);
 Route::get('misproductos',[ClienteController::class, 'misproductos']);
-Route::post('propuesta',[ClienteController::class, 'propuesta']);
 Route::get('actualizarp/{id}',[ClienteController::class, 'actualizarp']);
 Route::put('updateproducto/{id}',[ClienteController::class, 'updateproducto']);
 Route::get('miscompras',[ClienteController::class, 'miscompras']);
 Route::get('misventas',[ClienteController::class, 'misventas']);
-
+Route::get('proponer-producto',[ClienteController::class, 'mostrarpropuesta']);
+Route::post('propuesta',[ClienteController::class, 'propuesta']);
 
 
 //Encargado
@@ -139,3 +136,6 @@ Route::get('kardex/{id}',[UsuarioController::class, 'verkardex']);
 Route::get('Vendedores',[UsuarioController::class, 'vendedor']);
 Route::get('Historialvendedor/{id}',[UsuarioController::class, 'historialvendedor']);
 
+//Contador 
+Route::get('principal-contador',[UsuarioController::class, 'principalcontador']);
+Route::put('validar-compra/{id}',[UsuarioController::class, 'validarcompra']);

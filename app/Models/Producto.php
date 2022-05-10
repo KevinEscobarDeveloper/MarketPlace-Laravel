@@ -28,7 +28,7 @@ class Producto extends Model
     ];
     
     public function categorias(){
-        return $this->belongsToMany(Categoria::class, 'categoria_producto');
+        return $this->belongsToMany(Categoria::class, 'categoria_productos','producto_id','categoria_id');
     }
 
     public function usuarios(){
@@ -41,6 +41,10 @@ class Producto extends Model
 
     public function ventas(){
         return $this->hasMany(Venta::class, 'ventas_id','id');
+    }
+
+    public function imagenes(){
+        return $this->hasMany(Imagen::class, 'productos_id','id');
     }
 
 }

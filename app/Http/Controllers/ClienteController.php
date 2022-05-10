@@ -10,6 +10,8 @@ use App\Models\Producto;
 use App\Models\Venta;
 use App\Models\Pregunta;
 use App\Models\Transaccion;
+use App\Models\Imagen;
+use App\Models\Categoria;
 
 class ClienteController extends Controller
 {
@@ -155,7 +157,7 @@ class ClienteController extends Controller
             if(!empty($valores['comprobante'])){
                 $file = $request->file('comprobante'); 
                 $originalname = $file->getClientOriginalName();
-                $file->storeAs('public/cliente',$originalname);
+                $file->storeAs('public/evidencias',$originalname);
                 $valores['comprobante'] = '/storage/evidencias/'.$originalname;
                 $mensaje='Compra exitosa';
                 
@@ -264,6 +266,16 @@ class ClienteController extends Controller
         return view("clientes.misproductos",compact('productos'));
     }
 
+    public function mostrarpropuesta(){
+
+        $categorias = Categoria::select('categorias.nombre')
+        ->get();
+
+        $mensaje='respuesta enviada';
+
+        return view("clientes.venderp",compact('categorias'));
+    }
+
     public function propuesta(Request $request){
         $valores=$request->all();
         $fecha = date('y/m/d');
@@ -274,37 +286,46 @@ class ClienteController extends Controller
         foreach($usuario as $user){
         $iduser = $user->id;
         }
-        if($request->hasFile('imagen')==false){
-            $mensaje='Tiene que añadir imagenes';
-            return view("clientes.venderp",compact('mensaje'));
-        }
+
 
         if($request->hasFile('imagen')){
             $imagenes = $request->file('imagen');
             foreach($imagenes as $imagen){
                 $nombre = time().'_'.$imagen->getClientOriginalName();
-                $ruta = $file->storeAs('public/productos');
-                $imagen->move($ruta,$nombre);
-                $urlimagenes[]['url'] = $nombre;
-
-                // $originalname = $file->getClientOriginalName();
-                // $file->storeAs('public/cliente',$originalname);
-                // $valores['comprobante'] = '/storage/evidencias/'.$originalname;
+                $imagen->storeAs('public/productos',$nombre);
+                //$ruta = public_path().'/productos';
+                //$imagen->move($ruta,$nombre);
+                
+                $urlimagenes[]['url'] = 'public/productos/'.$nombre;
             }
-            
-            return $urlimagenes;
-        // $producto = new Producto;
-        // $producto->nombre=$valores->nombre;
-        // $producto->descripción=$valores->descripcion;
-        // $producto->precio=$valores->precio;
-        // $producto->existencia=$valores->existencia;
-        // $producto->usuarios_id=$iduser;
-        // $producto->fecha=$fecha;
-        // $producto->save();
-        }
 
-        $mensaje='respuesta enviada';
-        //return view("clientes.misproductos",compact('productos'));
+        $producto = new Producto;
+        $producto->nombre=$valores['nombre'];
+        $producto->descripción=$valores['descripcion'];
+        $producto->precio=$valores['precio'];
+        $producto->existencia=$valores['existencia'];
+        $producto->usuarios_id=$iduser;
+        $producto->consignar='0';
+        $producto->fecha=$fecha;
+        $producto->save();
+
+        $categoria = Categoria::where('nombre','=',$valores['categoria'])->firstOrFail();
+        $producto->categorias()->attach($categoria->id);
+        
+
+        foreach($urlimagenes as $rutaimagen){
+            $imagenDB = new Imagen;
+            $imagenDB->nombre = $rutaimagen['url'];
+            $imagenDB->productos_id = $producto->id;
+            $imagenDB->save();
+     
+        }
+     }
+
+     $categorias = Categoria::select('categorias.nombre')
+     ->get();
+       
+        return view("clientes.venderp",compact('categorias'));
     }
 
     public function actualizarp($id){
@@ -351,14 +372,28 @@ class ClienteController extends Controller
         $iduser = $user->id;
         }
         //-----------------//
-        $productos = Producto::select('productos.nombre','productos.precio','productos.descripción')
+        $ventas = Producto::selectRaw('productos.id, count(productos.id) as vendidos, productos.nombre, productos.precio,
+        productos.existencia')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
         -> join('ventas','productos.id', '=', 'ventas.productos_id')
         -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
         -> where ('productos.usuarios_id','=',$iduser)
-        ->get();
+       ->groupBy('productos.id')
+       ->get();
 
+        /* $cantidad = Producto::select('productos.nombre','productos.precio','productos.existencia')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where (['productos.usuarios_id','=',$iduser,])
+        ->groupBy('pnombre','productos.precio','productos.existencia')
+        ->having('pnombre','productos.precio','productos.existencia') < 1; */
+
+        
+
+        //dd($ventas);
         //dd($productos);
-        return view("clientes.miscompras",compact('productos'));
+        return view("clientes.misventas",compact('ventas'));
     }
 }
 
