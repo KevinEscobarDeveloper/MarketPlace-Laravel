@@ -34,5 +34,9 @@ class Usuario extends Model
     public function transacciones(){
         return $this->hasMany(Transaccion::class, 'transaccion_id','id');
     }
+
+    public function pagoss(){
+        return $this->hasMany(Pago::class, 'pagos_id','id');
+    }
 }
 

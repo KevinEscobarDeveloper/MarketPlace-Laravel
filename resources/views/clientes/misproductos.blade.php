@@ -27,6 +27,8 @@
       <th>Consecionado</th>
       <th>Razon</th>
       <th>Actualizar</th>
+      <th>Imagenes</th>
+      <th>Eliminar</th>
     </tr>
   </thead>
   <tbody>
@@ -39,7 +41,7 @@
       <td>{{$producto->consignar}}</td>
       <td>{{$producto->motivo}}</td>
       @php
-        $valor=$producto->consignar  
+        $valor=$producto->consignar;  
       @endphp
       @if ($valor=='0')
         <td><a href="/actualizarp/{{$producto->proid}}" class="btn btn-primary">Actualizar</a><td>
@@ -49,12 +51,36 @@
         <td><button type="submit" class="btn btn-primary" disabled>Actualizar</button></td>
        </form>
         @endif
+        @if ($valor=='0')
+        <a href="/editar-fotos/{{$producto->proid}}" class="btn btn-info">Editar</a>
+        @endif
+      @if ($valor=='1')
+      <form action="" method="get" >
+        <td><button type="submit" class="btn btn-info" disabled>Editar</button></td>
+       </form>
+        @endif  
+      @if ($valor=='1')
+      <form action="" method="post" >
+        <td><button type="submit" class="btn btn-danger" disabled>Eliminar</button></td>
+        </form>
+        @endif  
+      @if ($valor=='0')
+      <form action="/borrar-producto/{{$producto->proid}}" method="post" >
+        @method('DELETE')
+        @csrf
+        <td><button type="submit" class="btn btn-danger" >Eliminar</button></td>
+        </form>
+      @endif
     </tr>
+
+    
+
+
     @endforeach
   </tbody>
 </table>
 </div>
-         
+        
 </body>
 
 </body>

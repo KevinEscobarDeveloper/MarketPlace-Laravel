@@ -12,6 +12,7 @@ use App\Models\Pregunta;
 use App\Models\Transaccion;
 use App\Models\Imagen;
 use App\Models\Categoria;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
@@ -102,7 +103,7 @@ class ClienteController extends Controller
        
             $usuarios = Usuario::select('usuarios.nombre as usernombre','productos.nombre',
             'usuarios.apellido_paterno','usuarios.apellido_materno',
-            'productos.precio','productos.imagen','productos.consecionado')
+            'productos.precio','productos.consecionado')
             -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
             -> where ('productos.id','=',$id)
             ->get();
@@ -296,7 +297,7 @@ class ClienteController extends Controller
                 //$ruta = public_path().'/productos';
                 //$imagen->move($ruta,$nombre);
                 
-                $urlimagenes[]['url'] = 'public/productos/'.$nombre;
+                $urlimagenes[]['url'] = '/storage/productos/'.$nombre;
             }
 
         $producto = new Producto;
@@ -394,6 +395,113 @@ class ClienteController extends Controller
         //dd($ventas);
         //dd($productos);
         return view("clientes.misventas",compact('ventas'));
+    }
+
+    public function editarfotos($id){
+        $id=$id;
+        //-----------------//
+        $productos = Producto::where('id', $id)->get(['nombre','id']);
+        $imagenes = Imagen::where('productos_id', $id)->get(['nombre','id']);
+        return view("clientes.editimagenes",compact('productos','imagenes'));
+    }
+
+    public function formularioimagen($id){
+
+        //-----------------//
+        $productos = Producto::where('id', $id)->get(['nombre','id']);
+        return view("clientes.addimagen",compact('productos','id'));
+    }
+
+    public function añadirimagen(Request $request,$id){
+        $valores=$request->all();
+        $id=$id;
+        $urlimagenes = [];
+
+        //dd($valores);
+        if($request->hasFile('imagen')){
+            $imagenes = $request->file('imagen');
+            foreach($imagenes as $imagen){
+                $nombre = time().'_'.$imagen->getClientOriginalName();
+                $imagen->storeAs('public/productos',$nombre);
+                
+                $urlimagenes[]['url'] = '/storage/productos/'.$nombre;
+            }
+        
+        foreach($urlimagenes as $rutaimagen){
+            $imagenDB = new Imagen;
+            $imagenDB->nombre = $rutaimagen['url'];
+            $imagenDB->productos_id = $id;
+            $imagenDB->save();
+     
+        }
+     }
+     $productos = Producto::where('id', $id)->get(['nombre','id']);
+     $mensaje='Imagen añadida correctamente';
+
+        return view("clientes.addimagen",compact('productos','mensaje','id'));
+    }
+
+    public function cambiarimagen(Request $request,$id){
+        $imagenes = Imagen::where('id', $id)->get(['nombre','id']);
+        return view("clientes.changeimagen",compact('imagenes','id'));
+    }
+
+
+    public function updateimagen(Request $request,$id){
+        $valores=$request->all();
+        $imagenes = Imagen::select('nombre')->find($id);
+        
+       
+        //unlink(Storage::disk('public')->delete($imagenes['nombre']));
+        unlink(public_path($imagenes['nombre']));
+            $file = $request->file('imagen'); 
+            $originalname = time().'_'.$file->getClientOriginalName();
+            $file->storeAs('public/productos',$originalname);
+            
+            $valores['imagen'] = '/storage/productos/'.$originalname;
+            
+            Imagen::where('id',$id)->update(['nombre'=>$valores['imagen']]);    
+
+        $mensaje='Imagen cambiada';
+         $imagenes = Imagen::where('id', $id)->get(['nombre','id']);
+         return view("clientes.changeimagen",compact('imagenes','id','mensaje'));
+    }
+
+    public function deleteimagen(Request $request,$id){
+        $valores=$request->all();
+        $imagenes = Imagen::select('nombre')->find($id);
+
+        unlink(public_path($imagenes['nombre']));
+        
+        Imagen::where('id',$id)->delete();
+
+        $productos = Producto::where('nombre', $valores['nombre'])->get(['nombre','id']);
+
+        foreach($productos as $producto){
+            $idproducto=$producto->id;
+          }
+        
+        $imagenes = Imagen::where('productos_id', $idproducto)->get(['nombre','id']);
+        
+         //$imagenes = Imagen::where('id', $id)->get(['nombre','id']);
+         return redirect()->route('editar-fotos.editarfotos',$idproducto);
+    }
+
+    public function deleteproducto($id){
+        $id=$id;
+        $imagenes = Imagen::where('productos_id', $id)->get();
+
+        foreach($imagenes as $imagen){
+            unlink(public_path($imagen['nombre']));
+            Imagen::where('id',$imagen['id'])->delete();
+
+        }
+        
+        Producto::where('id',$id)->delete();
+        $productos=Producto::select('*')->get();
+        
+        
+        return redirect()->route('misproductos.misproductos');
     }
 }
 

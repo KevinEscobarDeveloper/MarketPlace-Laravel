@@ -24,6 +24,9 @@ return new class extends Migration
 
             $table->foreignId('productos_id')->nullable()
             ->constrained('productos')->onUpdate('cascade') ->onDelete('cascade');
+
+            $table->foreignId('pagos_id')->nullable()
+            ->constrained('pagos')->onUpdate('cascade') ->onDelete('cascade');
            
 
         }); 

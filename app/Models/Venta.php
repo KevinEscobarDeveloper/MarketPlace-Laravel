@@ -26,4 +26,8 @@ class Venta extends Model
     public function transacciones(){
         return $this->belongsTo(Transaccion::class, 'transaccion_id','id');
     }
+
+    public function pagos(){
+        return $this->belongsTo(Pago::class,'pagos_id','id');
+    }
 }

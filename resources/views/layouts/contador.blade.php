@@ -65,14 +65,18 @@
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 mt-4">
-        <a href="/productos-cliente" class="list-group-item list-group-item-action py-2 ripple">
+        <a href="/principal-contador" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Validar compras</span>
         </a>
-        <a href="/principal-cliente" class="list-group-item list-group-item-action py-2 ripple ">
-          <i class="fas fa-chart-area fa-fw me-3"></i><span>Categorías</span>
+      
+        <a href="/vista-pago" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Crear pago</span>
         </a>
 
-        >
+        <a href="/principal-contador" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Ver pagos</span>
+        </a>
+
       </div>
     </div>
   </nav>

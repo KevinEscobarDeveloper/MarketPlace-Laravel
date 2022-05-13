@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Venta;
+use App\Models\Producto;
+use App\Models\Usuario;
+use App\Models\Pago;
 
 
 class UsuarioController extends Controller
@@ -149,7 +152,7 @@ class UsuarioController extends Controller
         DB::table('categorias')->where('id', $id)->delete();
         $categorias = DB::table('categorias')->get();
         
-        return view("supervisor.principal")->with('categorias',$categorias);
+        return redirect()->route('principal-supervisor.principal');
     }
 
     public function añadircategoria(Request $request){
@@ -345,7 +348,79 @@ class UsuarioController extends Controller
         ->get();
         
        
-        return view("contador.principal",compact('ventas'));
+        return redirect()->route('principal-contador.principal');
+    }
+
+    public function vistapago(){
+        
+        $usuarios = DB::table('usuarios')
+        -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
+        ->select('usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
+        'usuarios.fecha','usuarios.id','usuarios.imagen')
+        ->groupBy('usuarios.id')
+        ->get();
+              
+        return view("contador.vistapago",compact('usuarios'));
+    }
+
+    public function crearpago($id){
+        
+        //-----------------//
+        $ventas = Producto::selectRaw('productos.id, count(productos.id) as vendidos, productos.nombre, productos.precio,
+        productos.consecionado')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where ([['productos.usuarios_id','=',$id],['ventas.status','=','Aceptado']])
+       ->groupBy('productos.id')
+       ->get();
+
+       $usuarios = Usuario::where('id', $id)->get(['nombre','id']);
+              
+        return view("contador.crearpago",compact('ventas','usuarios'));
+    }
+    
+    public function generarpago(Request $request,$id){
+        $valores=$request->all();
+        $montototal=0;
+        //dd($valores);
+        //-----------------//
+
+        //---- Este array sirve para sacar el monto total en función de los switch
+        //y el indice que se obtiene a traves de array_search
+        foreach($valores['productos'] as $producto){
+            //dd($producto);
+            foreach(array_values($valores['precios']) as $monto){
+                //dd($producto,(string)key($valores['precios']));
+                //dd($producto);
+                $i=array_search($monto,$valores['precios']);
+               if($i==(int)$producto){
+                   $montototal+=$monto;
+               }
+             }
+            
+        }
+
+        $pago = new Pago;
+        $pago->pago = $montototal;
+        $pago->estado = 'Pendiente';
+        $pago->usuarios_id = $id;
+        $pago->save();
+
+        //---Asociamos las ventas al pago------//
+        foreach($valores['productos'] as $producto){
+            //dd($producto);
+            
+            Venta::where('productos_id',$producto)->update(['pagos_id'=>$pago->id]);
+            
+        }
+
+
+        
+
+       //$usuarios = Usuario::where('id', $id)->get(['nombre','id']);
+              
+        //return view("contador.crearpago",compact('ventas','usuarios'));
     }
 
 

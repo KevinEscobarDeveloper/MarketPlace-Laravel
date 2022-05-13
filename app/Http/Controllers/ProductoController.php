@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Imagen;
+
 
 class ProductoController extends Controller
 {
@@ -22,7 +24,10 @@ class ProductoController extends Controller
         'productos.precio','productos.imagen','productos.consignar','productos.motivo',
         'productos.existencia','productos.pendientes')
         ->get();
-        return view("clientes.principal")->with('productos',$productos);
+
+        $imagenes = Imagen::select('imagenes.productos_id','imagenes.nombre')
+        ->get();
+        return view("clientes.principal",compact('productos','imagenes'));
     }
 
     public function productosencargado(){

@@ -64,6 +64,11 @@ Route::get('crear-usuario', function() {
     //buscara el archivo 'tablero' dentro de resoureces/views
 });
 
+Route::get('principal-sup', function() {
+    return view('supervisor.principal');
+   
+});
+
 
 
 
@@ -99,13 +104,19 @@ Route::post('tipocompra/{id}',[ClienteController::class, 'tipocompra']);
 Route::get('mispreguntas',[ClienteController::class, 'mispreguntas']);
 Route::get('verpregunta/{id}',[ClienteController::class, 'verpregunta']);
 Route::put('respuesta/{id}',[ClienteController::class, 'respuesta']);
-Route::get('misproductos',[ClienteController::class, 'misproductos']);
+Route::get('misproductos',[ClienteController::class, 'misproductos'])->name('misproductos.misproductos');
 Route::get('actualizarp/{id}',[ClienteController::class, 'actualizarp']);
 Route::put('updateproducto/{id}',[ClienteController::class, 'updateproducto']);
 Route::get('miscompras',[ClienteController::class, 'miscompras']);
 Route::get('misventas',[ClienteController::class, 'misventas']);
 Route::get('proponer-producto',[ClienteController::class, 'mostrarpropuesta']);
 Route::post('propuesta',[ClienteController::class, 'propuesta']);
+Route::get('editar-fotos/{id}',[ClienteController::class, 'editarfotos'])->name('editar-fotos.editarfotos');
+Route::get('formimagen/{id}',[ClienteController::class, 'formularioimagen']);
+Route::post('addimagen/{id}',[ClienteController::class, 'añadirimagen']);
+Route::get('cambiarimagen/{id}',[ClienteController::class, 'cambiarimagen']);
+Route::delete('editar-fotos/deleteimagen/{id}',[ClienteController::class, 'deleteimagen']);
+Route::delete('borrar-producto/{id}',[ClienteController::class, 'deleteproducto']);
 
 
 //Encargado
@@ -120,7 +131,7 @@ Route::put('updatedesconsignar/{id}',[UsuarioController::class, 'actualizardesco
 
 
 //Supervisor
-Route::get('principal-supervisor',[UsuarioController::class, 'principalsupervisor']);
+Route::get('principal-supervisor',[UsuarioController::class, 'principalsupervisor'])->name('principal-supervisor.principal');
 Route::get('editarcategoria/{id}',[UsuarioController::class, 'editarcategoria']);
 Route::put('updatecategoria/{id}',[UsuarioController::class, 'updatecategoria']);
 Route::delete('borrarcategoria/{id}',[UsuarioController::class, 'borrarcategoria']);
@@ -134,8 +145,11 @@ Route::put('editarpasswordsup/{id}',[UsuarioController::class, 'actualizarcontra
 Route::get('Tablero',[UsuarioController::class, 'tablerodatos']);
 Route::get('kardex/{id}',[UsuarioController::class, 'verkardex']);
 Route::get('Vendedores',[UsuarioController::class, 'vendedor']);
-Route::get('Historialvendedor/{id}',[UsuarioController::class, 'historialvendedor']);
+
 
 //Contador 
-Route::get('principal-contador',[UsuarioController::class, 'principalcontador']);
+Route::get('principal-contador',[UsuarioController::class, 'principalcontador'])->name('principal-contador.principal');
 Route::put('validar-compra/{id}',[UsuarioController::class, 'validarcompra']);
+Route::get('vista-pago',[UsuarioController::class, 'vistapago']);
+Route::get('crear-pago/{id}',[UsuarioController::class, 'crearpago']);
+Route::put('generar-pago/{id}',[UsuarioController::class, 'generarpago']);
