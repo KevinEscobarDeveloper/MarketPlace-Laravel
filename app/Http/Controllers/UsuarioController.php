@@ -266,8 +266,12 @@ class UsuarioController extends Controller
     public function tablerodatos(){
         $count=DB::table('usuarios')->count();
         $countcat=DB::table('categorias')->count();
+        $ventas=DB::table('ventas')->count();
+        $propuestas = DB::table('productos')
+        ->where([['productos.consignar','=',0]])
+        ->count();
        
-        return view("supervisor.tablero",compact('count','countcat'));;
+        return view("supervisor.tablero",compact('count','countcat','ventas','propuestas'));;
         }
 
     public function verkardex($id){
@@ -281,6 +285,14 @@ class UsuarioController extends Controller
         $productos = DB::table('productos')->where('productos.id','=',$id)
         ->get();
 
+        $ventas = Producto::selectRaw('productos.id, count(productos.id) as vendidos')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where ([['ventas.productos_id','=',$id],['ventas.status','=','Aceptado']])
+       ->groupBy('productos.id')
+       ->get();
+
         foreach($productos as $producto){
         $precio =$producto->precio;
       
@@ -293,7 +305,7 @@ class UsuarioController extends Controller
             $consecionado=$consecionado/100;
         }
         $ganancia =$precio-($precio*$consecionado);
-        return view("supervisor.kardex",compact('preguntas','productos','ganancia'));
+        return view("supervisor.kardex",compact('preguntas','productos','ganancia','ventas'));
         }
 
         public function vendedor(){
@@ -328,7 +340,16 @@ class UsuarioController extends Controller
         ['usuarios.id','=',$id]])
         ->count();
 
-    return view("supervisor.historial",compact('usuarios','productos','consignados'));
+        $ventas = Producto::selectRaw('productos.id, count(productos.id) as vendidos')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where ([['productos.usuarios_id','=',$id],['ventas.status','=','Aceptado']])
+        //,'ventas.status','=','Aceptado'
+       ->groupBy('productos.id')
+       ->get();
+
+    return view("supervisor.historial",compact('usuarios','productos','consignados','ventas'));
     }
     //----------CONTADOR------------//
     public function principalcontador(){           

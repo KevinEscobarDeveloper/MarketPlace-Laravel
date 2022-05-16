@@ -101,6 +101,7 @@ Route::post('realizarpregunta/{id}',[ClienteController::class, 'realizarpregunta
 Route::get('comprar/{id}',[ClienteController::class, 'comprar']);
 Route::post('tipocompra/{id}',[ClienteController::class, 'tipocompra']);
 Route::put('calificar-transaccion/{id}',[ClienteController::class, 'calificacion']);
+Route::put('updateimagen/{id}',[ClienteController::class, 'updateimagen']);
 //VENDEDOR
 Route::get('mispreguntas',[ClienteController::class, 'mispreguntas']);
 Route::get('verpregunta/{id}',[ClienteController::class, 'verpregunta']);
@@ -146,6 +147,7 @@ Route::put('editarpasswordsup/{id}',[UsuarioController::class, 'actualizarcontra
 Route::get('Tablero',[UsuarioController::class, 'tablerodatos']);
 Route::get('kardex/{id}',[UsuarioController::class, 'verkardex']);
 Route::get('Vendedores',[UsuarioController::class, 'vendedor']);
+Route::get('Historialvendedor/{id}',[UsuarioController::class, 'historialvendedor']);
 
 
 //Contador 

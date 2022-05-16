@@ -26,8 +26,6 @@
       <th>Transacciones</th>
       <th>Productos registrados</th>
       <th>Productos consignados</th>
-      <th>Productos comprados</th>
-      <th>Productos en oferta</th>
     </tr>
   </thead>
   <tbody>
@@ -35,11 +33,11 @@
     <tr>
       <td>{{$usuario->nombre}} {{$usuario->apellido_paterno}} {{$usuario->apellido_materno}}</td>
       <td>{{$usuario->fecha}}</td>
-      <td></td>
+      @foreach ($ventas as $venta)
+      <td>{{$venta->vendidos}}</td>      
+      @endforeach
       <td>{{$productos}}</td>
       <td>{{$consignados}}</td>
-      <td></td>
-      <td></td>
     </tr>
     @endforeach
   </tbody>

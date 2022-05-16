@@ -18,7 +18,6 @@ class Producto extends Model
         'nombre',
         'descripcion',
         'precio',
-        'imagen',
         'conseccionado',
         'consignar',
         'motivo',

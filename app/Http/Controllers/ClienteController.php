@@ -68,7 +68,7 @@ class ClienteController extends Controller
         -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
         ->select('usuarios.nombre as usernombre','productos.nombre',
         'usuarios.apellido_paterno','usuarios.apellido_materno',
-        'productos.precio','productos.imagen','productos.consecionado')
+        'productos.precio','productos.consecionado')
         -> where ('productos.id','=',$id)
         ->get();
         //dd($productos);
@@ -91,7 +91,7 @@ class ClienteController extends Controller
             -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
             ->select('usuarios.nombre as usernombre','productos.nombre',
             'usuarios.apellido_paterno','usuarios.apellido_materno',
-            'productos.precio','productos.imagen','productos.consecionado')
+            'productos.precio','productos.consecionado')
             -> where ('productos.id','=',$id)
             ->get();
 
@@ -125,7 +125,7 @@ class ClienteController extends Controller
 
         $usuarios = Usuario::select('usuarios.nombre as usernombre','productos.nombre',
             'usuarios.apellido_paterno','usuarios.apellido_materno',
-            'productos.precio','productos.imagen','productos.consecionado')
+            'productos.precio','productos.consecionado')
             -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
             -> where ('productos.id','=',$id)
             ->get();
@@ -224,7 +224,7 @@ class ClienteController extends Controller
             }
             $preguntas = Pregunta::select('preguntas.id as idp','productos.nombre as pnombre','preguntas.respuesta',
             'usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
-            'productos.precio','productos.imagen')
+            'productos.precio')
             -> join('productos','preguntas.productos_id', '=', 'productos.id')
             -> join('usuarios','preguntas.usuarios_id', '=', 'usuarios.id')
             -> where ('productos.usuarios_id','=',$iduser)
@@ -242,7 +242,7 @@ class ClienteController extends Controller
         }
         $preguntas = Pregunta::select('preguntas.id as idp','preguntas.pregunta','preguntas.respuesta','productos.nombre as pnombre',
         'usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
-        'productos.precio','productos.imagen')
+        'productos.precio')
         -> join('productos','preguntas.productos_id', '=', 'productos.id')
         -> join('usuarios','preguntas.usuarios_id', '=', 'usuarios.id')
         -> where ('preguntas.id','=',$id)
@@ -262,7 +262,7 @@ class ClienteController extends Controller
 
         $preguntas = Pregunta::select('preguntas.id as idp','preguntas.pregunta','preguntas.respuesta','productos.nombre as pnombre',
         'usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
-        'productos.precio','productos.imagen')
+        'productos.precio')
         -> join('productos','preguntas.productos_id', '=', 'productos.id')
         -> join('usuarios','preguntas.usuarios_id', '=', 'usuarios.id')
         -> where ('preguntas.id','=',$id)

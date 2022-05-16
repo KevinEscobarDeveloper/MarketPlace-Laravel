@@ -39,7 +39,9 @@
       <td>{{$producto->precio}}</td>
       <td>{{$ganancia}}</td>
       <td>{{$preguntas}}</td>
-      <td></td>
+      @foreach ($ventas as $venta)
+      <td>{{$venta->vendidos}}</td> 
+      @endforeach
     </tr>
     @endforeach
   </tbody>

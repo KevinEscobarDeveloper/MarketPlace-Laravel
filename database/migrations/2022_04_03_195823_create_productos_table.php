@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string("nombre",20);
             $table->string("descripción",100)->nullable();
             $table->float('precio',8,2);
-            $table->string("imagen",150)->nullable();
             $table->tinyInteger("consecionado")->nullable();
             $table->boolean("consignar")->nullable();
             $table->string("motivo",100)->nullable();

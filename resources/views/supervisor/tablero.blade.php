@@ -41,38 +41,22 @@
 
                     
                         <div class="bg-info text-white text-center m-1">
-                            <div class="card-header">Transacciones del mes</div>
+                            <div class="card-header">Propuestas</div>
                             <div class="card-body">
-                                <h5 class="card-title"><span id="idVendidos">105</span></h5>
-                                <p class="card-text">Disminución de ingresos vs mes anterior</p>
+                                <h5 class="card-title"><span id="idVendidos">{{$propuestas}}</span></h5>
+                              
+                            </div>
+                        </div>
+
+                        <div class="bg-info text-white text-center m-1">
+                            <div class="card-header">Ventas</div>
+                            <div class="card-body">
+                                <h5 class="card-title"><span id="idVendidos">{{$ventas}}</span></h5>
+           
                             </div>
                         </div>
                     </div>
                 </div>
-                <canvas id="bar-chart" width="800" height="250"></canvas>
-                <script>
-                // Bar chart
-                new Chart(document.getElementById("bar-chart"), {
-                    type: 'bar',
-                    data: {
-                        labels: ["Arroz", "Leche", "Atún"],
-                        datasets: [{
-                            label: "Ganancias (pesos)",
-                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-                            data: [2008, 3067, 934]
-                        }]
-                    },
-                    options: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Productos más vendidos del mes'
-                        }
-                    }
-                });
-                </script>
 
             </main>
         </div>
