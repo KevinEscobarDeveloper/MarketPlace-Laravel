@@ -13,7 +13,10 @@ class ProductoController extends Controller
         $productos = DB::table('productos')
         ->where([['productos.consignar','=',1]])
         ->get();
-        return view("categorias.productos")->with('productos',$productos);
+
+        $imagenes = Imagen::select('*')->get();
+        return view("categorias.productos",compact('productos','imagenes'));
+  
     }
     
     public function productoscliente(){
@@ -25,8 +28,7 @@ class ProductoController extends Controller
         'productos.existencia','productos.pendientes')
         ->get();
 
-        $imagenes = Imagen::select('imagenes.productos_id','imagenes.nombre')
-        ->get();
+        $imagenes = Imagen::select('*')->get();
         return view("clientes.principal",compact('productos','imagenes'));
     }
 
@@ -38,7 +40,9 @@ class ProductoController extends Controller
         'productos.precio','productos.imagen','productos.consecionado','productos.consignar',
         'productos.motivo','productos.existencia','productos.pendientes')
         ->get();
-        return view("encargado.principal")->with('productos',$productos);
+
+        $imagenes = Imagen::select('*')->get();
+        return view("encargado.principal",compact('productos','imagenes'));
     }
 
     public function productosdesconsignar(){
@@ -49,7 +53,9 @@ class ProductoController extends Controller
         'productos.precio','productos.imagen','productos.consecionado','productos.consignar',
         'productos.motivo','productos.existencia','productos.pendientes')
         ->get();
-        return view("encargado.productos")->with('productos',$productos);
+
+        $imagenes = Imagen::select('*')->get();
+        return view("encargado.productos",compact('productos','imagenes'));
     }
     public function productossupervisor(){
         $productos = DB::table('productos')
@@ -59,6 +65,7 @@ class ProductoController extends Controller
         'productos.precio','productos.imagen','productos.consecionado','productos.consignar',
         'productos.motivo','productos.existencia','productos.pendientes')
         ->get();
-        return view("supervisor.productos")->with('productos',$productos);
+        $imagenes = Imagen::select('*')->get();
+        return view("supervisor.productos",compact('productos','imagenes'));
     }
 }

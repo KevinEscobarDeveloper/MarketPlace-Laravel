@@ -73,7 +73,7 @@
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Crear pago</span>
         </a>
 
-        <a href="/principal-contador" class="list-group-item list-group-item-action py-2 ripple">
+        <a href="/listar-pago" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Ver pagos</span>
         </a>
 

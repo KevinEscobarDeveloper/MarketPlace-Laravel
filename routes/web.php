@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('login', function() {
     return view('login.login');
-    //buscara el archivo 'login' donde también se relizará la autenticación dentro de resoureces/views
+    
 });
 
 Route::get('principal-categoria', function() {
@@ -35,7 +35,7 @@ Route::get('principal-categoria', function() {
 
 Route::get('tablero', function() {
     return view('supervisor.tablero');
-    //buscara el archivo 'tablero' dentro de resoureces/views
+    
 });
 
 Route::get('principal-cliente', function() {
@@ -61,7 +61,7 @@ Route::get('crear-categoria', function() {
 
 Route::get('crear-usuario', function() {
     return view('supervisor.crearuser');
-    //buscara el archivo 'tablero' dentro de resoureces/views
+    
 });
 
 Route::get('principal-sup', function() {
@@ -100,6 +100,7 @@ Route::get('pregunta/{id}',[ClienteController::class, 'preguntar']);
 Route::post('realizarpregunta/{id}',[ClienteController::class, 'realizarpregunta']);
 Route::get('comprar/{id}',[ClienteController::class, 'comprar']);
 Route::post('tipocompra/{id}',[ClienteController::class, 'tipocompra']);
+Route::put('calificar-transaccion/{id}',[ClienteController::class, 'calificacion']);
 //VENDEDOR
 Route::get('mispreguntas',[ClienteController::class, 'mispreguntas']);
 Route::get('verpregunta/{id}',[ClienteController::class, 'verpregunta']);
@@ -107,7 +108,7 @@ Route::put('respuesta/{id}',[ClienteController::class, 'respuesta']);
 Route::get('misproductos',[ClienteController::class, 'misproductos'])->name('misproductos.misproductos');
 Route::get('actualizarp/{id}',[ClienteController::class, 'actualizarp']);
 Route::put('updateproducto/{id}',[ClienteController::class, 'updateproducto']);
-Route::get('miscompras',[ClienteController::class, 'miscompras']);
+Route::get('miscompras',[ClienteController::class, 'miscompras'])->name('miscompras.ver');
 Route::get('misventas',[ClienteController::class, 'misventas']);
 Route::get('proponer-producto',[ClienteController::class, 'mostrarpropuesta']);
 Route::post('propuesta',[ClienteController::class, 'propuesta']);
@@ -151,5 +152,9 @@ Route::get('Vendedores',[UsuarioController::class, 'vendedor']);
 Route::get('principal-contador',[UsuarioController::class, 'principalcontador'])->name('principal-contador.principal');
 Route::put('validar-compra/{id}',[UsuarioController::class, 'validarcompra']);
 Route::get('vista-pago',[UsuarioController::class, 'vistapago']);
-Route::get('crear-pago/{id}',[UsuarioController::class, 'crearpago']);
-Route::put('generar-pago/{id}',[UsuarioController::class, 'generarpago']);
+Route::get('crear-pago/{id}',[UsuarioController::class, 'crearpago'])->name('crear-pago.generar');
+Route::post('generar-pago/{id}',[UsuarioController::class, 'generarpago']);
+Route::get('listar-pago',[UsuarioController::class, 'listarpagos'])->name('listar-pago.listar');
+Route::get('editar-pago/{id}',[UsuarioController::class, 'editarpagos']);
+Route::put('update-pago/{id}',[UsuarioController::class, 'updatepago']);
+Route::put('entregar-pago/{id}',[UsuarioController::class, 'entregarpago']);

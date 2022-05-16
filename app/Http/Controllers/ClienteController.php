@@ -13,6 +13,10 @@ use App\Models\Transaccion;
 use App\Models\Imagen;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
+
+
 
 class ClienteController extends Controller
 {
@@ -133,6 +137,7 @@ class ClienteController extends Controller
             $usuario = \Session::get('usuario');
             foreach($usuario as $user){
             $iduser = $user->id;
+            $nameuser = $user->nombre;
             }
             $correo = Usuario::where('id',$iduser)->value('correo');
             $venta = new Venta;
@@ -151,6 +156,14 @@ class ClienteController extends Controller
             $producto = Producto::find($id);
             $producto->decrement('existencia',1);
 
+            
+            $details=[
+                'title' => 'Venta en el mercado',
+                'body' => 'El cliente '.$nameuser.' se a postulado para su producto '.$producto->nombre
+            ];
+    
+            Mail::to("sop.man.kaem@gmail.com")->send(new TestMail($details));
+
             return view("clientes.tipocompra",compact('id','usuarios','productos','valores'));
             
         }
@@ -165,6 +178,8 @@ class ClienteController extends Controller
                 $usuario = \Session::get('usuario');
                 foreach($usuario as $user){
                 $iduser = $user->id;
+                $nameuser = $user->nombre;
+                
                 }
 
                 $correo = Usuario::where('id',$iduser)->value('correo');
@@ -183,12 +198,21 @@ class ClienteController extends Controller
                  //-----------//
                 $producto = Producto::find($id);
                 $producto->decrement('existencia',1);
+
+                $details=[
+                    'title' => 'Venta en el mercado',
+                    'body' => 'El cliente'.$nameuser.' se a postulado para su producto'.$producto->nombre
+                ];
+        
+                Mail::to("sop.man.kaem@gmail.com")->send(new TestMail($details));
+
                 return view("clientes.tipocompra",compact('id','usuarios','productos','valores','mensaje'));
                 }
             
             
             if(empty($valores['comprobante'])){
                 $mensaje='Agregue el comprobante';
+                
                 return view("clientes.tipocompra",compact('id','usuarios','productos','mensaje','valores'));
             }  
         }        
@@ -357,14 +381,23 @@ class ClienteController extends Controller
         $iduser = $user->id;
         }
         //-----------------//
-        $productos = Producto::select('productos.nombre','productos.precio','productos.descripción')
-        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        $productos = Producto::join('ventas','productos.id', '=', 'ventas.productos_id')
         -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
-        -> where ('transacciones.usuarios_id','=',$iduser)
+        ->select('productos.nombre','productos.precio','productos.descripción','transacciones.calificacion',
+        'transacciones.id as tid')
+        -> where ([['transacciones.usuarios_id','=',$iduser],['ventas.status','=','Aceptado']])
         ->get();
 
+       
         //dd($productos);
         return view("clientes.miscompras",compact('productos'));
+    }
+
+    public function calificacion(Request $request,$id){
+        $valores=$request->all();
+       
+        Transaccion::where('id',$id)->update(['calificacion'=>((int)$valores['rating']['rating'])]);
+        return redirect()->route('miscompras.ver');
     }
 
     public function misventas(){
@@ -503,5 +536,7 @@ class ClienteController extends Controller
         
         return redirect()->route('misproductos.misproductos');
     }
+
+
 }
 

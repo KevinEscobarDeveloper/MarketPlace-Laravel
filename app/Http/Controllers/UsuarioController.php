@@ -372,6 +372,7 @@ class UsuarioController extends Controller
         -> join('ventas','productos.id', '=', 'ventas.productos_id')
         -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
         -> where ([['productos.usuarios_id','=',$id],['ventas.status','=','Aceptado']])
+        ->whereNull('ventas.pagado')
        ->groupBy('productos.id')
        ->get();
 
@@ -411,16 +412,94 @@ class UsuarioController extends Controller
         foreach($valores['productos'] as $producto){
             //dd($producto);
             
-            Venta::where('productos_id',$producto)->update(['pagos_id'=>$pago->id]);
+            Venta::where('productos_id',$producto)->update(['pagos_id'=>$pago->id,'pagado'=>'Pendiente']);
+            
+        }
+              
+        return redirect()->route('crear-pago.generar',$id);
+    }
+
+    public function listarpagos(){
+        
+        //-----------------//
+        $pagos = Pago::join('usuarios','pagos.usuarios_id', '=', 'usuarios.id')
+        ->select('pagos.id','pagos.pago','pagos.estado','usuarios.nombre','usuarios.id as iduser')
+        ->get();
+              
+        return view("contador.pagos",compact('pagos'));
+    }
+
+    public function editarpagos($id){
+
+        $pagos = Pago::select(['*'])->where('pagos.id','=',$id)->get();
+        
+        foreach($pagos as $pago){
+            $iduser = $pago->usuarios_id;
+        }
+        
+        $ventas = Producto::selectRaw('productos.id, count(productos.id) as vendidos, productos.nombre, productos.precio,
+        productos.consecionado')
+        -> join('usuarios','productos.usuarios_id', '=', 'usuarios.id')
+        -> join('ventas','productos.id', '=', 'ventas.productos_id')
+        -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
+        -> where ([['productos.usuarios_id','=',$iduser],['ventas.status','=','Aceptado']])
+        ->whereNull('ventas.pagado')
+       ->groupBy('productos.id')
+       ->get();
+
+       $usuarios = Usuario::where('id', $iduser)->get(['nombre','id']);
+   
+        return view("contador.editarpago",compact('ventas','usuarios','pagos'));
+      
+    }
+
+    public function updatepago(Request $request,$id){
+        $valores=$request->all();
+        $montototal=$valores['montot'];
+        //dd($valores);
+        //-----------------//
+
+        //---- Este array sirve para sacar el monto total en función de los switch
+        //y el indice que se obtiene a traves de array_search
+        foreach($valores['productos'] as $producto){
+            //dd($producto);
+            foreach(array_values($valores['precios']) as $monto){
+                //dd($producto,(string)key($valores['precios']));
+                //dd($producto);
+                $i=array_search($monto,$valores['precios']);
+               if($i==(int)$producto){
+                   $montototal+=$monto;
+               }
+             }
             
         }
 
+        Pago::where('id',$valores['id'])->update(['pago'=>$montototal]);
 
-        
-
-       //$usuarios = Usuario::where('id', $id)->get(['nombre','id']);
+        //---Asociamos las ventas al pago------//
+        foreach($valores['productos'] as $producto){
+            //dd($producto);
+            
+        Venta::where('productos_id',$producto)->update(['pagos_id'=>$valores['id'],'pagado'=>'Pendiente']);
+        }
               
-        //return view("contador.crearpago",compact('ventas','usuarios'));
+        return redirect()->route('listar-pago.listar');
+    }
+
+    public function entregarpago($id){
+
+
+        Pago::where('id',$id)->update(['estado'=>'Entregado']);
+
+        $ventas = Venta::where('ventas.pagos_id','=',$id)->get();
+
+
+        foreach($ventas as $venta){
+            Venta::where('id',$venta->id)->update(['pagado'=>'pagado']);
+        }
+        
+              
+        return redirect()->route('listar-pago.listar');
     }
 
 

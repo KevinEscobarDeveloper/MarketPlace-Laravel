@@ -22,7 +22,11 @@
 @foreach ($usuarios as $usuario)
     
 @endforeach
-  <form action="/generar-pago/{{ $usuario->id }}" class="form-horizontal" method="post">
+@foreach ($pagos as $pago)
+    
+@endforeach
+  <form action="/update-pago/{{ $usuario->id }}" class="form-horizontal" method="post">
+    @method('put')
     @csrf
     <table id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0"
   width="100%">
@@ -33,7 +37,8 @@
       <th>precio por pieza</th>
       <th>consecionado</th>
       <th>pago por producto</th>
-      <th>añadir a pago</th>
+      <th>Añadir a pago actual</th>
+    
      
 
     </tr>
@@ -46,6 +51,15 @@
       <div class="col-md-8">
           <input id="fname" name="nombre" type="text" value="{{$usuario->nombre}}" class="form-control" readonly>
       </div>
+      <label>Monto actual</label>
+      <div class="col-md-8">
+          <input id="fname" name="montot" type="text" value="{{$pago->pago}}" class="form-control" readonly>
+      </div>
+      <label>ID Pago</label>
+      <div class="col-md-8">
+          <input id="fname" name="id" type="text" value="{{$pago->id}}" class="form-control" readonly>
+      </div>
+      
    @php
      $contador=0;  
    @endphp
@@ -62,8 +76,6 @@
               value="{{($venta->vendidos*$venta->precio)-(($venta->consecionado/100)*$venta->vendidos*$venta->precio)}}" 
               class="form-control" readonly></td>
         </div>
-    
-
       <td><div class="form-group">
         <span class="col-md-1 col-md-offset-2 text-center"><i class=""></i></span>
         <div class="col-md-8">
@@ -80,7 +92,7 @@
   </tbody>
 </table>
 
-  <button type="submit" name='pago'value='pago' class="btn btn-info">Generar</button></td>
+  <button type="submit" name='pago'value='pago' class="btn btn-info">Actualizar</button></td>
 </form> 
       
     

@@ -16,7 +16,8 @@ class Venta extends Model
         'status',
         'evidencia',
         'tipo',
-        'correo',   
+        'correo',  
+        'pagado', 
     ];
 
     public function productos(){

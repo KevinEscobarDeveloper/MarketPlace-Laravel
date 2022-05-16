@@ -40,7 +40,21 @@
       <td>{{$producto->nombre}}</td>
       <td>{{$producto->descripción}}</td>
       <td>{{$producto->precio}}</td>
-      <td><img class="card-img-top" width ="50px" src={{$producto->imagen}}></td>
+      @php
+      
+      $contador=0;
+      @endphp
+      <td>
+      @foreach ($imagenes as $imagen)
+            @if ($imagen->productos_id==$producto->id)
+            <a href={{$imagen->nombre}}> Ver imagen {{$contador+=1}}</a><br>
+            @endif
+      @endforeach
+    </td> 
+      @php
+      
+      $contador=0;
+      @endphp
       <td>{{$producto->consecionado}}</td>
       <td>{{$producto->consignar}}</td>
       <td>{{$producto->motivo}}</td>

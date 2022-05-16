@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('status', ['Aceptado','Rechazado','Pendiente'])->default('Pendiente');
             $table->enum('tipo', ['Transacción','Deposito'])->default('Transacción');
             $table->string("evidencia",150)->nullable();
+            $table->enum('pagado', ['Pendiente','pagado'])->nullable();
 
             $table->foreignId('productos_id')->nullable()
             ->constrained('productos')->onUpdate('cascade') ->onDelete('cascade');
