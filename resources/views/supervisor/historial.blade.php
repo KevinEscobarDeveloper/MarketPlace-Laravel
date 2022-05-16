@@ -33,9 +33,7 @@
     <tr>
       <td>{{$usuario->nombre}} {{$usuario->apellido_paterno}} {{$usuario->apellido_materno}}</td>
       <td>{{$usuario->fecha}}</td>
-      @foreach ($ventas as $venta)
-      <td>{{$venta->vendidos}}</td>      
-      @endforeach
+      <td>{{$ventas}}</td>      
       <td>{{$productos}}</td>
       <td>{{$consignados}}</td>
     </tr>

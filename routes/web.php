@@ -96,7 +96,7 @@ Route::post('crearcliente',[ClienteController::class,'crear'])->middleware('arre
 Route::get('principal-cliente',[ClienteController::class, 'principalcliente']);
 //Listar productos por categorias para los clientes
 Route::get('categoria/{id}',[ClienteController::class, 'listarcategorias']);
-Route::get('pregunta/{id}',[ClienteController::class, 'preguntar']);
+Route::get('pregunta/{id}',[ClienteController::class, 'preguntar'])->name('pregunta.principal');
 Route::post('realizarpregunta/{id}',[ClienteController::class, 'realizarpregunta']);
 Route::get('comprar/{id}',[ClienteController::class, 'comprar']);
 Route::post('tipocompra/{id}',[ClienteController::class, 'tipocompra']);

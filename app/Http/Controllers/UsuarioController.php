@@ -323,10 +323,11 @@ class UsuarioController extends Controller
     public function historialvendedor($id){
         
         $usuarios = DB::table('usuarios')
-        -> join('productos','usuarios.id', '=', 'productos.id')
+        -> join('productos','usuarios.id', '=', 'productos.usuarios_id')
         ->select('usuarios.nombre','usuarios.apellido_paterno','usuarios.apellido_materno',
         'usuarios.fecha','usuarios.id','usuarios.imagen')
         ->where('usuarios.id','=',$id)
+        ->groupBy('usuarios.id')
         ->get();
 
         $productos = DB::table('productos')
@@ -346,9 +347,9 @@ class UsuarioController extends Controller
         -> join('transacciones','ventas.id', '=', 'transacciones.ventas_id')
         -> where ([['productos.usuarios_id','=',$id],['ventas.status','=','Aceptado']])
         //,'ventas.status','=','Aceptado'
-       ->groupBy('productos.id')
-       ->get();
-
+       ->count();
+    
+  
     return view("supervisor.historial",compact('usuarios','productos','consignados','ventas'));
     }
     //----------CONTADOR------------//

@@ -72,6 +72,7 @@ class ClienteController extends Controller
         -> where ('productos.id','=',$id)
         ->get();
         //dd($productos);
+        
         return view("clientes.pregunta",compact('id','productos'));
     }
 
@@ -99,7 +100,7 @@ class ClienteController extends Controller
             //--------------//
            
             $mensaje='Pregunta realizada';
-            return view("clientes.pregunta",compact('id','mensaje','productos'));
+            return redirect()->route('pregunta.principal',$id);
     }
 
     public function comprar($id){
