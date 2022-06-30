@@ -50,6 +50,7 @@ class ClienteController extends Controller
 
     public function principalcliente(){
         $categorias = DB::table('categorias')->get();
+
         return view("clientes.principal")->with('categorias',$categorias);
     }
     public function listarcategorias($id){
@@ -57,7 +58,8 @@ class ClienteController extends Controller
         -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
         -> where ('categoria_productos.categoria_id',$id)
         ->get();
-        return view("clientes.principal")->with('cproductos',$cproductos);
+        $imagenes = Imagen::select('*')->get();
+        return view("clientes.principal",compact('cproductos','imagenes'));
     }
 
 

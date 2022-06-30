@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Imagen;
 
 class CategoriaController extends Controller
 {
@@ -22,6 +23,7 @@ class CategoriaController extends Controller
                    -> where ([['categoria_productos.categoria_id',$id],['productos.consignar','=',1]])
                    ->get();
 
-        return view("categorias.productos")->with('productos',$productos);
+        $imagenes = Imagen::select('*')->get();
+        return view("categorias.productos",compact('productos','imagenes'));
     }
 }

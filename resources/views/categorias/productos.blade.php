@@ -37,11 +37,13 @@
       $contador=0;
       @endphp
       <td>
+        @if (!empty($imagenes))
       @foreach ($imagenes as $imagen)
             @if ($imagen->productos_id==$producto->id)
             <a href={{$imagen->nombre}}> Ver imagen {{$contador+=1}}</a><br>
             @endif
       @endforeach
+      @endif
     </td> 
       @php
       $contador=0;

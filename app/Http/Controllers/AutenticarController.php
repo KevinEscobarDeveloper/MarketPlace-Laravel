@@ -46,7 +46,7 @@ class AutenticarController extends Controller
             case 'Contador':
                 if($request->input('contraseña')==$contraseña){
                     \Session::put('usuario',$usuario);
-                    return  redirect('/contador.principal');
+                    return  redirect('/principal-contador');
                 }
                 else return  redirect('/login');
                 break;

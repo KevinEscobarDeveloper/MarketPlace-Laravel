@@ -110,7 +110,21 @@
       <td>{{$cproducto->nombre}}</td>
       <td>{{$cproducto->descripción}}</td>
       <td>{{$cproducto->precio}}</td>
-      <td><img class="card-img-top" width ="50px" src={{$cproducto->imagen}}></td>
+      @php
+      $contador=0;
+      @endphp
+      <td>
+        @if (!empty($imagenes))
+      @foreach ($imagenes as $imagen)
+            @if ($imagen->cproductos_id==$cproducto->id)
+            <a href={{$imagen->nombre}}> Ver imagen {{$contador+=1}}</a><br>
+            @endif
+      @endforeach
+      @endif
+    </td> 
+      @php
+      $contador=0;
+      @endphp
       <td>{{$cproducto->existencia}}</td>
       <td>{{$cproducto->pendientes}}</td>
       <td><a href="/pregunta/{{ $cproducto->id }}" class="btn btn-primary">Realizar pregunta</a></td>

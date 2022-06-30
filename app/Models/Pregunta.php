@@ -22,6 +22,6 @@ class Pregunta extends Model
     }
 
     public function usuarios(){
-        return $this->belongsTo(Producto::class,'usuarios_id','id');
+        return $this->belongsTo(Usuario::class,'usuarios_id','id');
     }
 }

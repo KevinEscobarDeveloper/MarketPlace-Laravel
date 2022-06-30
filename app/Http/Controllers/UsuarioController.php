@@ -105,8 +105,20 @@ class UsuarioController extends Controller
 
   //--------SUPERVISOR------//
     public function principalsupervisor(){
+
         $categorias = DB::table('categorias')->get();
-        return view("supervisor.principal")->with('categorias',$categorias);
+
+        
+        $productos = Producto::selectRaw('count(productos.id) as cantidad')
+        -> join('categoria_productos','productos.id', '=', 'categoria_productos.producto_id')
+        -> join('categorias','categoria_productos.categoria_id', '=', 'categorias.id')
+        ->groupBy('producto_id')
+        ->get();
+
+        dd($productos);
+        
+        return view("supervisor.principal",compact('categorias','productos'));
+    
     }
 
     public function editarcategoria(Request $request, $id){

@@ -29,6 +29,7 @@
                 @csrf
                 @method('DELETE')
             <button type="submit" class="btn btn-danger">Borrar</button>
+            <p class="card-text">productos</p>
             </form>
             </div>
         </div>
